@@ -364,3 +364,14 @@ if __name__ == '__main__':
         train_and_evaluate(model, train_dl, dev_dl, optimizer, loss_fn, metrics, params,
                            args.model_dir, args.restore_file)
 
+    elif params.model_version == "cnn":
+        model = net.Net(params).cuda() if params.cuda else net.Net(params)
+        optimizer = optim.Adam(model.parameters(), lr=params.learning_rate)
+        # fetch loss function and metrics
+        loss_fn = net.loss_fn
+        metrics = net.metrics
+        # Train the model
+        logging.info("Starting training for {} epoch(s)".format(params.num_epochs))
+        train_and_evaluate(model, train_dl, dev_dl, optimizer, loss_fn, metrics, params,
+                           args.model_dir, args.restore_file)
+
