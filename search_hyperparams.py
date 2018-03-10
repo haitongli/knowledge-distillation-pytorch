@@ -56,8 +56,10 @@ if __name__ == "__main__":
     #     launch_training_job(args.parent_dir, job_name, params)
 
     # Perform hypersearch (grid): KD temperature, alpha
-    alphas = [0.95, 0.9, 0.7, 0.5, 0.3]
-    temperatures = [30, 20, 10, 5, 2]
+    # alphas = [0.95, 0.9, 0.7, 0.5, 0.3]
+    # temperatures = [30, 20, 10, 5, 2]
+    alphas = [0.99, 0.999]
+    temperatures = [20, 2]
 
     for alpha in alphas:
         for temperature in temperatures:
