@@ -44,20 +44,8 @@ if __name__ == "__main__":
     assert os.path.isfile(json_path), "No json configuration file found at {}".format(json_path)
     params = utils.Params(json_path)
 
-    # Perform hypersearch over one parameter
-    learning_rates = [1e-4, 1e-3, 1e-2]
-
-    for learning_rate in learning_rates:
-        # [Modify] the relevant parameter in params (others remain unchanged)
-        params.learning_rate = learning_rate
-
-        # Launch job (name has to be unique)
-        job_name = "learning_rate_{}".format(learning_rate)
-        launch_training_job(args.parent_dir, job_name, params)
-
-    # # Perform hypersearch (grid): KD temperature, alpha
-    # alphas = [0.95, 0.9, 0.7, 0.5, 0.3]
-    # temperatures = []
+    # # Perform hypersearch over one parameter
+    # learning_rates = [1e-4, 1e-3, 1e-2]
 
     # for learning_rate in learning_rates:
     #     # [Modify] the relevant parameter in params (others remain unchanged)
@@ -66,4 +54,19 @@ if __name__ == "__main__":
     #     # Launch job (name has to be unique)
     #     job_name = "learning_rate_{}".format(learning_rate)
     #     launch_training_job(args.parent_dir, job_name, params)
+
+    # Perform hypersearch (grid): KD temperature, alpha
+    alphas = [0.95, 0.9, 0.7, 0.5, 0.3]
+    temperatures = [30, 20, 10, 5, 2]
+
+    for alpha in alphas:
+        for temperature in temperatures:
+            # [Modify] the relevant parameter in params (others remain unchanged)
+            params.alpha = alpha
+            params.temperature = temperature
+
+            # Launch job (name has to be unique)
+            job_name = "alpha_{}_Temp_{}".format(alpha, temperature)
+            launch_training_job(args.parent_dir, job_name, params)
+        
 
