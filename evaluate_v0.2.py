@@ -66,7 +66,7 @@ def evaluate(model, loss_fn, dataloader, metrics, params):
     return metrics_mean
 
 
-def evaluate_kd(model, teacher_model, loss_fn_kd, dataloader, metrics, params):
+def evaluate_kd(model, teacher_outputs, loss_fn_kd, dataloader, metrics, params):
     """Evaluate the model on `num_steps` batches.
 
     Args:
@@ -96,8 +96,12 @@ def evaluate_kd(model, teacher_model, loss_fn_kd, dataloader, metrics, params):
         # compute model output
         output_batch = model(data_batch)
 
-        # loss = loss_fn_kd(output_batch, labels_batch, output_teacher_batch, params)
-        loss = 0.0  #force validation loss to zero to reduce computation time
+        #get one batch output from teacher_outputs_val
+        output_teacher_batch = teacher_outputs[i]
+        output_teacher_batch = Variable(output_teacher_batch, requires_grad=False)
+
+        loss = loss_fn_kd(output_batch, labels_batch, output_teacher_batch, params)
+        # loss = 0.0  #force validation loss to zero to reduce computation time
 
         # extract data from torch Variable, move to cpu, convert to numpy arrays
         output_batch = output_batch.data.cpu().numpy()
@@ -106,8 +110,7 @@ def evaluate_kd(model, teacher_model, loss_fn_kd, dataloader, metrics, params):
         # compute all metrics on this batch
         summary_batch = {metric: metrics[metric](output_batch, labels_batch)
                          for metric in metrics}
-        # summary_batch['loss'] = loss.data[0]
-        summary_batch['loss'] = loss
+        summary_batch['loss'] = loss.data[0]
         summ.append(summary_batch)
 
     # compute mean of all metrics in summary
