@@ -48,9 +48,22 @@ if __name__ == "__main__":
     learning_rates = [1e-4, 1e-3, 1e-2]
 
     for learning_rate in learning_rates:
-        # Modify the relevant parameter in params
+        # [Modify] the relevant parameter in params (others remain unchanged)
         params.learning_rate = learning_rate
 
         # Launch job (name has to be unique)
         job_name = "learning_rate_{}".format(learning_rate)
         launch_training_job(args.parent_dir, job_name, params)
+
+    # # Perform hypersearch (grid): KD temperature, alpha
+    # alphas = [0.95, 0.9, 0.7, 0.5, 0.3]
+    # temperatures = []
+
+    # for learning_rate in learning_rates:
+    #     # [Modify] the relevant parameter in params (others remain unchanged)
+    #     params.learning_rate = learning_rate
+
+    #     # Launch job (name has to be unique)
+    #     job_name = "learning_rate_{}".format(learning_rate)
+    #     launch_training_job(args.parent_dir, job_name, params)
+
