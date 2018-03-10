@@ -116,10 +116,11 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
         scheduler = StepLR(optimizer, step_size=100, gamma=0.1)
     elif params.model_version == "wrn":
         scheduler = StepLR(optimizer, step_size=60, gamma=0.2)
+    elif params.model_version == "cnn":
+        scheduler = StepLR(optimizer, step_size=30, gamma=0.2)
 
     for epoch in range(params.num_epochs):
-        if params.model_version == 'resnet18' or 'wrn':
-            scheduler.step()
+        scheduler.step()
         # Run one epoch
         logging.info("Epoch {}/{}".format(epoch + 1, params.num_epochs))
 
