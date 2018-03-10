@@ -117,7 +117,7 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
     elif params.model_version == "wrn":
         scheduler = StepLR(optimizer, step_size=60, gamma=0.2)
     elif params.model_version == "cnn":
-        scheduler = StepLR(optimizer, step_size=30, gamma=0.2)
+        scheduler = StepLR(optimizer, step_size=40, gamma=0.2)
 
     for epoch in range(params.num_epochs):
         scheduler.step()
