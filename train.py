@@ -157,20 +157,20 @@ def fetch_teacher_outputs(teacher_model, dataloader, params):
     # set teacher_model to evaluation mode
     teacher_model.eval()
     teacher_outputs = []
-    for i, (train_batch, labels_batch) in enumerate(dataloader):
+    for i, (data_batch, labels_batch) in enumerate(dataloader):
         if params.cuda:
-            train_batch, labels_batch = train_batch.cuda(async=True), \
+            data_batch, labels_batch = data_batch.cuda(async=True), \
                                         labels_batch.cuda(async=True)
-        train_batch, labels_batch = Variable(train_batch), Variable(labels_batch)
+        data_batch, labels_batch = Variable(data_batch), Variable(labels_batch)
 
-        output_teacher_batch = teacher_model(train_batch).data
+        output_teacher_batch = teacher_model(data_batch).data
         teacher_outputs.append(output_teacher_batch)
 
     return teacher_outputs
 
 # Defining train_kd & train_and_evaluate_kd functions
 
-def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, params):
+def train_kd(model, teacher_outputs, optimizer, loss_fn_kd, dataloader, metrics, params):
     """Train the model on `num_steps` batches
 
     Args:
@@ -184,7 +184,6 @@ def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, p
 
     # set model to training mode
     model.train()
-    teacher_model.eval()
 
     # summary for current training loop and a running average object for loss
     summ = []
@@ -202,7 +201,11 @@ def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, p
 
             # compute model output, fetch teacher output, and compute KD loss
             output_batch = model(train_batch)
-            output_teacher_batch = teacher_model(train_batch).detach()
+
+            # get one batch output from teacher_outputs list
+            output_teacher_batch = teacher_outputs[i]
+            output_teacher_batch = Variable(output_teacher_batch, requires_grad=False)
+            # output_teacher_batch = teacher_model(train_batch).detach()
             loss = loss_fn_kd(output_batch, labels_batch, output_teacher_batch, params)
 
             # clear previous gradients, compute gradients of all variables wrt loss
@@ -254,6 +257,10 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
 
     best_val_acc = 0.0
 
+    teacher_model.eval()
+    teacher_outputs = fetch_teacher_outputs(teacher_model, train_dataloader, params)
+    teacher_outputs_val = fetch_teacher_outputs(teacher_model, val_dataloader, params)
+
     for epoch in range(params.num_epochs):
         # Run one epoch
         logging.info("Epoch {}/{}".format(epoch + 1, params.num_epochs))
@@ -262,7 +269,8 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         train_kd(model, teacher_model, optimizer, loss_fn_kd, train_dataloader, metrics, params)
 
         # Evaluate for one epoch on validation set
-        val_metrics = evaluate_kd(model, loss_fn_kd, val_dataloader, metrics, params)
+        val_metrics = evaluate_kd(model, teacher_outputs_val, loss_fn_kd, val_dataloader,
+                                  metrics, params)
 
         val_acc = val_metrics['accuracy']
         is_best = val_acc>=best_val_acc
