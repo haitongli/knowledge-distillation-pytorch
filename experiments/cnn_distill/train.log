@@ -1,0 +1,15 @@
+2018-03-09 12:18:02,702:INFO: Loading the datasets...
+2018-03-09 12:18:06,068:INFO: - done.
+2018-03-09 12:22:53,512:INFO: Loading the datasets...
+2018-03-09 12:22:56,898:INFO: - done.
+2018-03-09 12:22:57,110:INFO: Starting training for 30 epoch(s)
+2018-03-09 12:22:57,110:INFO: Epoch 1/30
+2018-03-09 12:27:22,093:INFO: Loading the datasets...
+2018-03-09 12:27:25,487:INFO: - done.
+2018-03-09 12:27:25,668:INFO: Starting training for 30 epoch(s)
+2018-03-09 12:27:25,668:INFO: Epoch 1/30
+2018-03-09 12:32:16,080:INFO: Loading the datasets...
+2018-03-09 12:32:19,529:INFO: - done.
+2018-03-09 12:32:19,721:INFO: Starting training for 30 epoch(s)
+2018-03-09 12:32:19,721:INFO: Epoch 1/30
+2018-03-09 12:53:53,299:INFO: - Train metrics: accuracy: 0.434 ; loss: 0.741
