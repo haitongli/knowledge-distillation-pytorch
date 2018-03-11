@@ -358,7 +358,7 @@ if __name__ == '__main__':
             teacher_model = nn.DataParallel(teacher_model).cuda()
 
         elif params.teacher == "densenet":
-            teacher_model = densenet.DenseNet(depth=190, growthRate=40)
+            teacher_model = densenet.DenseNet(depth=100, growthRate=12)
             teacher_checkpoint = 'experiments/base_densenet/best.pth.tar'
             teacher_model = nn.DataParallel(teacher_model).cuda()
 
