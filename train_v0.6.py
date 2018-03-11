@@ -165,7 +165,7 @@ def fetch_teacher_outputs(teacher_model, dataloader, params):
                                         labels_batch.cuda(async=True)
         data_batch, labels_batch = Variable(data_batch), Variable(labels_batch)
 
-        output_teacher_batch = teacher_model(data_batch).data.numpy()
+        output_teacher_batch = teacher_model(data_batch).data.cpu().numpy()
         teacher_outputs.append(output_teacher_batch)
 
     return teacher_outputs
@@ -207,6 +207,8 @@ def train_kd(model, teacher_outputs, optimizer, loss_fn_kd, dataloader, metrics,
 
             # get one batch output from teacher_outputs list
             output_teacher_batch = torch.from_numpy(teacher_outputs[i])
+            if params.cuda:
+                output_teacher_batch = output_teacher_batch.cuda(async=True)
             output_teacher_batch = Variable(output_teacher_batch, requires_grad=False)
 
             loss = loss_fn_kd(output_batch, labels_batch, output_teacher_batch, params)
