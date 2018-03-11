@@ -139,11 +139,11 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
         is_best = val_acc>=best_val_acc
 
         # Save weights
-        utils.save_checkpoint({'epoch': epoch + 1,
-                               'state_dict': model.state_dict(),
-                               'optim_dict' : optimizer.state_dict()},
-                               is_best=is_best,
-                               checkpoint=model_dir)
+        # utils.save_checkpoint({'epoch': epoch + 1,
+        #                        'state_dict': model.state_dict(),
+        #                        'optim_dict' : optimizer.state_dict()},
+        #                        is_best=is_best,
+        #                        checkpoint=model_dir)
 
         # If best_eval, best_save_path
         if is_best:
@@ -303,11 +303,11 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         is_best = val_acc>=best_val_acc
 
         # Save weights
-        utils.save_checkpoint({'epoch': epoch + 1,
-                               'state_dict': model.state_dict(),
-                               'optim_dict' : optimizer.state_dict()},
-                               is_best=is_best,
-                               checkpoint=model_dir)
+        # utils.save_checkpoint({'epoch': epoch + 1,
+        #                        'state_dict': model.state_dict(),
+        #                        'optim_dict' : optimizer.state_dict()},
+        #                        is_best=is_best,
+        #                        checkpoint=model_dir)
 
         # If best_eval, best_save_path
         if is_best:
