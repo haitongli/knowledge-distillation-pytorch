@@ -1,8 +1,9 @@
 {
     "model_version": "cnn_distill",
-    "teacher": "wrn",
+    "subset_percent": 1.0,
+    "teacher": "ensemble",
     "alpha": 0.95,
-    "temperature": 5,
+    "temperature": 2,
     "learning_rate": 1e-3,
     "batch_size": 128,
     "num_epochs": 30,
