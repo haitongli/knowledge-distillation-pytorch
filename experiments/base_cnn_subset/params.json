@@ -1,6 +1,6 @@
 {
     "model_version": "cnn",
-    "subset_percent": 0.03,
+    "subset_percent": 0.05,
     "teacher": "none",
     "alpha": 0.95,
     "temperature": 5,
