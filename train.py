@@ -333,7 +333,8 @@ if __name__ == '__main__':
             teacher_model = resnet.ResNet18()
             teacher_checkpoint = 'experiments/base_resnet18/best.pth.tar'
         elif params.teacher == "wrn":
-            teacher_model = wrn.wrn(depth=28, num_classes=10, widen_factor=10, dropRate=0.3)
+            teacher_model = wrn.WideResNet(depth=28, num_classes=10, widen_factor=10,
+                                           dropRate=0.3)
             teacher_checkpoint = 'experiments/base_wrn/best.pth.tar'
 
         teacher_model = teacher_model.cuda() if params.cuda else teacher_model
