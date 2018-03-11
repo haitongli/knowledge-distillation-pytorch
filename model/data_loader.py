@@ -5,7 +5,7 @@ from PIL import Image
 import torch
 import torchvision
 import torchvision.transforms as transforms
-import torch.utils.data.sampler.SubsetRandomSampler as SubsetRandomSampler
+from torch.utils.data.sampler import SubsetRandomSampler
 
 def fetch_dataloader(types, params):
     """
