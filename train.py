@@ -363,7 +363,7 @@ if __name__ == '__main__':
     """Based on the model_version, determine model/optimizer and KD training mode
        WideResNet and DenseNet were trained on multi-GPU; need to specify a dummy
        nn.DataParallel module to correctly load the model parameters
-    """
+    """re
     if "distill" in params.model_version:
 
         if params.model_version == "cnn_distill":
