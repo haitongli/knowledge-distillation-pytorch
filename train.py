@@ -335,16 +335,21 @@ if __name__ == '__main__':
 
     logging.info("- done.")
 
-    # Based on the model_version, determine model/optimizer and KD training mode
+    '''Based on the model_version, determine model/optimizer and KD training mode
+       WideResNet and DenseNet were trained on multi-GPU; need to specify a dummy
+       nn.DataParallel module to correctly load the model parameters!
+    '''
     if params.model_version == "cnn_distill":
         model = net.Net(params).cuda() if params.cuda else net.Net(params)
         optimizer = optim.Adam(model.parameters(), lr=params.learning_rate)
         loss_fn_kd = net.loss_fn_kd
         metrics = net.metrics
-        # trigger knowledge distillation during training
+
+        # use resnet/wrn/densenet for knowledge distillation during training
         if params.teacher == "resnet18":
             teacher_model = resnet.ResNet18()
             teacher_checkpoint = 'experiments/base_resnet18/best.pth.tar'
+            teacher_model = teacher_model.cuda() if params.cuda else teacher_model
 
         elif params.teacher == "wrn":
             teacher_model = wrn.WideResNet(depth=28, num_classes=10, widen_factor=10,
@@ -357,7 +362,6 @@ if __name__ == '__main__':
             teacher_checkpoint = 'experiments/base_densenet/best.pth.tar'
             teacher_model = nn.DataParallel(teacher_model).cuda()
 
-        # teacher_model = teacher_model.cuda() if params.cuda else teacher_model
         utils.load_checkpoint(teacher_checkpoint, teacher_model)
 
         # Train the model with KD
