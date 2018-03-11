@@ -156,10 +156,10 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
         last_json_path = os.path.join(model_dir, "metrics_val_last_weights.json")
         utils.save_dict_to_json(val_metrics, last_json_path)
 
-        if epoch == params.num_epochs - 1:
-            train_metrics = evaluate(model, loss_fn, train_dataloader, metrics, params)
-            last_json_path = os.path.join(model_dir, "metrics_train_last_weights.json")
-            utils.save_dict_to_json(train_metrics, last_json_path)
+        # if epoch == params.num_epochs - 1:
+        #     train_metrics = evaluate(model, loss_fn, train_dataloader, metrics, params)
+        #     last_json_path = os.path.join(model_dir, "metrics_train_last_weights.json")
+        #     utils.save_dict_to_json(train_metrics, last_json_path)
 
 
 # Helper: get [batch_idx, teacher_outputs] list by running teacher model once
@@ -311,10 +311,10 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         last_json_path = os.path.join(model_dir, "metrics_val_last_weights.json")
         utils.save_dict_to_json(val_metrics, last_json_path)
 
-        if epoch == params.num_epochs - 1:
-            train_metrics = evaluate_kd(model, train_dataloader, metrics, params)
-            last_json_path = os.path.join(model_dir, "metrics_train_last_weights.json")
-            utils.save_dict_to_json(train_metrics, last_json_path)
+        # if epoch == params.num_epochs - 1:
+        #     train_metrics = evaluate_kd(model, train_dataloader, metrics, params)
+        #     last_json_path = os.path.join(model_dir, "metrics_train_last_weights.json")
+        #     utils.save_dict_to_json(train_metrics, last_json_path)
 
 
 if __name__ == '__main__':
