@@ -161,6 +161,6 @@ def load_checkpoint_gpu(checkpoint, model, optimizer=None):
         name = k[7:] # remove `module.`
         new_state_dict[name] = v
     # load params
-    model.load_state_dict(new_state_dict)
+    model.load_state_dict(new_state_dict['state_dict'])
 
     return checkpoint
