@@ -120,10 +120,12 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
     elif params.model_version == "wrn":
         scheduler = StepLR(optimizer, step_size=60, gamma=0.2)
     elif params.model_version == "cnn":
-        scheduler = StepLR(optimizer, step_size=30, gamma=0.2)
+        scheduler = StepLR(optimizer, step_size=100, gamma=0.2)
 
     for epoch in range(params.num_epochs):
+     
         scheduler.step()
+     
         # Run one epoch
         logging.info("Epoch {}/{}".format(epoch + 1, params.num_epochs))
 
@@ -277,7 +279,16 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
     elapsed_time = math.ceil(time.time() - loading_start)
     logging.info("- Finished computing teacher outputs after {} secs..".format(elapsed_time))
 
+    # learning rate schedulers for different models:
+    if params.model_version == "resnet18_distill":
+        scheduler = StepLR(optimizer, step_size=100, gamma=0.1)
+    elif params.model_version == "cnn_distill":
+        scheduler = StepLR(optimizer, step_size=100, gamma=0.2)
+
     for epoch in range(params.num_epochs):
+
+        scheduler.step()
+
         # Run one epoch
         logging.info("Epoch {}/{}".format(epoch + 1, params.num_epochs))
 
@@ -349,15 +360,25 @@ if __name__ == '__main__':
 
     logging.info("- done.")
 
-    '''Based on the model_version, determine model/optimizer and KD training mode
+    """Based on the model_version, determine model/optimizer and KD training mode
        WideResNet and DenseNet were trained on multi-GPU; need to specify a dummy
-       nn.DataParallel module to correctly load the model parameters!
-    '''
-    if params.model_version == "cnn_distill":
-        model = net.Net(params).cuda() if params.cuda else net.Net(params)
-        optimizer = optim.Adam(model.parameters(), lr=params.learning_rate)
-        loss_fn_kd = net.loss_fn_kd
-        metrics = net.metrics
+       nn.DataParallel module to correctly load the model parameters
+    """
+    if "distill" in params.model_version:
+
+        if params.model_version == "cnn_distill":
+            model = net.Net(params).cuda() if params.cuda else net.Net(params)
+            optimizer = optim.Adam(model.parameters(), lr=params.learning_rate)
+            loss_fn_kd = net.loss_fn_kd
+            metrics = net.metrics
+        
+        elif params.model_version == 'resnet18_distill':
+            model = resnet.ResNet18().cuda() if params.cuda else resnet.ResNet18()
+            optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
+                                  momentum=0.9, weight_decay=5e-4)
+            # fetch loss function and metrics
+            loss_fn_kd = net.loss_fn_kd
+            metrics = resnet.metrics
 
         # use resnet/wrn/densenet for knowledge distillation during training
         if params.teacher == "resnet18":
