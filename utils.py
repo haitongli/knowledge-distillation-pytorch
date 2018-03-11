@@ -163,4 +163,4 @@ def load_checkpoint_gpu(checkpoint, model, optimizer=None):
     # load params
     model.load_state_dict(new_state_dict['state_dict'])
 
-    return checkpoint
+    return new_state_dict
