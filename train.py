@@ -329,8 +329,12 @@ if __name__ == '__main__':
     # Create the input data pipeline
     logging.info("Loading the datasets...")
 
-    # fetch dataloaders
-    train_dl = data_loader.fetch_dataloader('train', params)
+    # fetch dataloaders, considering full-set vs. sub-set scenarios
+    if params.subset_percent < 1.0:
+        train_dl = data_loader.fetch_subset_dataloader('train', params)
+    else:
+        train_dl = data_loader.fetch_dataloader('train', params)
+    
     dev_dl = data_loader.fetch_dataloader('dev', params)
 
     logging.info("- done.")

@@ -69,7 +69,7 @@ def fetch_subset_dataloader(types, params):
 
     trainset_size = len(train_dataset)
     indices = list(range(trainset_size))
-    split = int(np.floor(params.percent * trainset_size))
+    split = int(np.floor(params.subset_percent * trainset_size))
     np.random.seed(230)
     np.random.shuffle(indices)
 
