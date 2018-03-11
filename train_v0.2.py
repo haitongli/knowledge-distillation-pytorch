@@ -1,4 +1,4 @@
-"""Train the model"""
+"""Train the model v0.2"""
 
 import argparse
 import logging
