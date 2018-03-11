@@ -218,7 +218,7 @@ def train_kd(model, teacher_ensemble_outputs, optimizer, loss_fn_kd, dataloader,
             # get one batch output from teacher_outputs list
             loss = 0.
             for teacher_idx in range(3):
-                output_teacher_batch = torch.from_numpy(teacher_outputs[teacher_idx][i])
+                output_teacher_batch = torch.from_numpy(teacher_ensemble_outputs[teacher_idx][i])
                 if params.cuda:
                     output_teacher_batch = output_teacher_batch.cuda(async=True)
                 output_teacher_batch = Variable(output_teacher_batch, requires_grad=False)
