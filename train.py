@@ -332,13 +332,15 @@ if __name__ == '__main__':
         if params.teacher == "resnet18":
             teacher_model = resnet.ResNet18()
             teacher_checkpoint = 'experiments/base_resnet18/best.pth.tar'
+
         elif params.teacher == "wrn":
             teacher_model = wrn.WideResNet(depth=28, num_classes=10, widen_factor=10,
                                            dropRate=0.3)
             teacher_checkpoint = 'experiments/base_wrn/best.pth.tar'
+            teacher_model = nn.DataParallel(teacher_model).cuda()
 
-        teacher_model = teacher_model.cuda() if params.cuda else teacher_model
-        utils.load_checkpoint_gpu(teacher_checkpoint, teacher_model)
+        # teacher_model = teacher_model.cuda() if params.cuda else teacher_model
+        utils.load_checkpoint(teacher_checkpoint, teacher_model)
 
         # Train the model with KD
         logging.info("Starting training for {} epoch(s)".format(params.num_epochs))
