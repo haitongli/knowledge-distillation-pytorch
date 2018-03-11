@@ -338,7 +338,7 @@ if __name__ == '__main__':
             teacher_checkpoint = 'experiments/base_wrn/best.pth.tar'
 
         teacher_model = teacher_model.cuda() if params.cuda else teacher_model
-        utils.load_checkpoint(teacher_checkpoint, teacher_model)
+        utils.load_checkpoint_gpu(teacher_checkpoint, teacher_model)
 
         # Train the model with KD
         logging.info("Starting training for {} epoch(s)".format(params.num_epochs))

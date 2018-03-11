@@ -4,6 +4,7 @@ import os
 import shutil
 
 import torch
+from collections import OrderedDict
 
 class Params():
     """Class that loads hyperparameters from a json file.
@@ -133,14 +134,33 @@ def load_checkpoint(checkpoint, model, optimizer=None):
     """
     if not os.path.exists(checkpoint):
         raise("File doesn't exist {}".format(checkpoint))
-    # if torch.cuda.is_available():
-    #     checkpoint = torch.load(checkpoint)
-    # else:
-    #     checkpoint = torch.load(checkpoint, map_location=lambda storage, loc: storage)
-    checkpoint = torch.load(checkpoint, map_location=lambda storage, loc: storage)
+    if torch.cuda.is_available():
+        checkpoint = torch.load(checkpoint)
+    else:
+        checkpoint = torch.load(checkpoint, map_location=lambda storage, loc: storage)
+    # checkpoint = torch.load(checkpoint, map_location=lambda storage, loc: storage)
     model.load_state_dict(checkpoint['state_dict'])
 
     if optimizer:
         optimizer.load_state_dict(checkpoint['optim_dict'])
+
+    return checkpoint
+
+
+def load_checkpoint_gpu(checkpoint, model, optimizer=None):
+
+    if not os.path.exists(checkpoint):
+        raise("File doesn't exist {}".format(checkpoint))
+
+    # original saved file with DataParallel
+    state_dict = torch.load(checkpoint)
+    # create new OrderedDict that does not contain `module.`
+    # from collections import OrderedDict
+    new_state_dict = OrderedDict()
+    for k, v in state_dict.items():
+        name = k[7:] # remove `module.`
+        new_state_dict[name] = v
+    # load params
+    model.load_state_dict(new_state_dict)
 
     return checkpoint
