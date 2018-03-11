@@ -265,7 +265,7 @@ def train_and_evaluate_kd(model, teacher_ensemble, train_dataloader, val_dataloa
         model: (torch.nn.Module) the neural network
         params: (Params) hyperparameters
         model_dir: (string) directory containing config, weights and log
-        restore_file: (string) optional- name of file to restore from (without its extension .pth.tar)
+        restore_file: (string) optional- file to restore (without its extension .pth.tar)
     """
     # reload weights from restore_file if specified
     if restore_file is not None:
@@ -409,12 +409,15 @@ if __name__ == '__main__':
             teacher_ensemble = {}
             teacher_ensemble["resnet18"] = resnet.ResNet18()
             teacher_checkpoint = 'experiments/base_resnet18/best.pth.tar'
+            teacher_model = teacher_model.cuda() if params.cuda else teacher_model
             utils.load_checkpoint(teacher_checkpoint, teacher_ensemble["resnet18"])
+            
             teacher_ensemble["wrn"] = wrn.WideResNet(depth=28, num_classes=10, widen_factor=10,
                                                    dropRate=0.3)
             teacher_checkpoint = 'experiments/base_wrn/best.pth.tar'
             teacher_ensemble["wrn"] = nn.DataParallel(teacher_ensemble["wrn"]).cuda()
             utils.load_checkpoint(teacher_checkpoint, teacher_ensemble["wrn"])
+            
             teacher_ensemble["densenet"] = densenet.DenseNet(depth=100, growthRate=12)
             teacher_checkpoint = 'experiments/base_densenet/best.pth.tar'
             teacher_ensemble["densenet"] = nn.DataParallel(teacher_ensemble["densenet"]).cuda()

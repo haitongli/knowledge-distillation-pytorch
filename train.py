@@ -262,7 +262,7 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         model: (torch.nn.Module) the neural network
         params: (Params) hyperparameters
         model_dir: (string) directory containing config, weights and log
-        restore_file: (string) optional- name of file to restore from (without its extension .pth.tar)
+        restore_file: (string) optional- file to restore (without its extension .pth.tar)
     """
     # reload weights from restore_file if specified
     if restore_file is not None:
