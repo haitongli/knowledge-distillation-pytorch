@@ -3,6 +3,8 @@
 import argparse
 import logging
 import os
+import time
+import math
 import random
 import numpy as np
 import torch
@@ -18,6 +20,7 @@ import model.net as net
 import model.data_loader as data_loader
 import model.resnet as resnet
 import model.wrn as wrn
+import model.densenet as densenet
 from evaluate import evaluate, evaluate_kd
 
 parser = argparse.ArgumentParser()
@@ -155,24 +158,24 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
 
 
 # Helper: get [batch_idx, teacher_outputs] list by running teacher model once
-# def fetch_teacher_outputs(teacher_model, dataloader, params):
-#     # set teacher_model to evaluation mode
-#     teacher_model.eval()
-#     teacher_outputs = []
-#     for i, (data_batch, labels_batch) in enumerate(dataloader):
-#         if params.cuda:
-#             data_batch, labels_batch = data_batch.cuda(async=True), \
-#                                         labels_batch.cuda(async=True)
-#         data_batch, labels_batch = Variable(data_batch), Variable(labels_batch)
+def fetch_teacher_outputs(teacher_model, dataloader, params):
+    # set teacher_model to evaluation mode
+    teacher_model.eval()
+    teacher_outputs = []
+    for i, (data_batch, labels_batch) in enumerate(dataloader):
+        if params.cuda:
+            data_batch, labels_batch = data_batch.cuda(async=True), \
+                                        labels_batch.cuda(async=True)
+        data_batch, labels_batch = Variable(data_batch), Variable(labels_batch)
 
-#         output_teacher_batch = teacher_model(data_batch).data
-#         teacher_outputs.append(output_teacher_batch)
+        output_teacher_batch = teacher_model(data_batch).data.cpu().numpy()
+        teacher_outputs.append(output_teacher_batch)
 
-#     return teacher_outputs
+    return teacher_outputs
 
 # Defining train_kd & train_and_evaluate_kd functions
 
-def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, params):
+def train_kd(model, teacher_outputs, optimizer, loss_fn_kd, dataloader, metrics, params):
     """Train the model on `num_steps` batches
 
     Args:
@@ -186,7 +189,7 @@ def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, p
 
     # set model to training mode
     model.train()
-    teacher_model.eval()
+    # teacher_model.eval()
 
     # summary for current training loop and a running average object for loss
     summ = []
@@ -206,7 +209,11 @@ def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, p
             output_batch = model(train_batch)
 
             # get one batch output from teacher_outputs list
-            output_teacher_batch = teacher_model(train_batch).detach()
+            output_teacher_batch = torch.from_numpy(teacher_outputs[i])
+            if params.cuda:
+                output_teacher_batch = output_teacher_batch.cuda(async=True)
+            output_teacher_batch = Variable(output_teacher_batch, requires_grad=False)
+
             loss = loss_fn_kd(output_batch, labels_batch, output_teacher_batch, params)
 
             # clear previous gradients, compute gradients of all variables wrt loss
@@ -258,17 +265,23 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
 
     best_val_acc = 0.0
 
+    # Compute teacher outputs using teacher_model under eval() mode
+    loading_start = time.time()
+    teacher_model.eval()
+    teacher_outputs = fetch_teacher_outputs(teacher_model, train_dataloader, params)
+    elapsed_time = math.ceil(time.time() - loading_start)
+    logging.info("- Finished computing teacher outputs after {} secs..".format(elapsed_time))
 
     for epoch in range(params.num_epochs):
         # Run one epoch
         logging.info("Epoch {}/{}".format(epoch + 1, params.num_epochs))
 
         # compute number of batches in one epoch (one full pass over the training set)
-        train_kd(model, teacher_model, optimizer, loss_fn_kd, train_dataloader, metrics, params)
+        train_kd(model, teacher_outputs, optimizer, loss_fn_kd, train_dataloader,
+                 metrics, params)
 
         # Evaluate for one epoch on validation set
-        val_metrics = evaluate_kd(model, teacher_model, loss_fn_kd, val_dataloader,
-                                  metrics, params)
+        val_metrics = evaluate_kd(model, val_dataloader, metrics, params)
 
         val_acc = val_metrics['accuracy']
         is_best = val_acc>=best_val_acc
@@ -339,11 +352,17 @@ if __name__ == '__main__':
             teacher_checkpoint = 'experiments/base_wrn/best.pth.tar'
             teacher_model = nn.DataParallel(teacher_model).cuda()
 
+        elif params.teacher == "densenet":
+            teacher_model = densenet.DenseNet(depth=190, growthRate=40)
+            teacher_checkpoint = 'experiments/base_densenet/best.pth.tar'
+            teacher_model = nn.DataParallel(teacher_model).cuda()
+
         # teacher_model = teacher_model.cuda() if params.cuda else teacher_model
         utils.load_checkpoint(teacher_checkpoint, teacher_model)
 
         # Train the model with KD
         logging.info("Starting training for {} epoch(s)".format(params.num_epochs))
+        logging.info("First, loading the teacher model and computing its outputs...")
         train_and_evaluate_kd(model, teacher_model, train_dl, dev_dl, optimizer, loss_fn_kd,
                               metrics, params, args.model_dir, args.restore_file)
 

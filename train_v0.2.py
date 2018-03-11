@@ -116,6 +116,8 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
         scheduler = StepLR(optimizer, step_size=100, gamma=0.1)
     elif params.model_version == "wrn":
         scheduler = StepLR(optimizer, step_size=60, gamma=0.2)
+    elif params.model_version == "cnn":
+        scheduler = StepLR(optimizer, step_size=30, gamma=0.2)
 
     for epoch in range(params.num_epochs):
         scheduler.step()
@@ -153,24 +155,24 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
 
 
 # Helper: get [batch_idx, teacher_outputs] list by running teacher model once
-def fetch_teacher_outputs(teacher_model, dataloader, params):
-    # set teacher_model to evaluation mode
-    teacher_model.eval()
-    teacher_outputs = []
-    for i, (data_batch, labels_batch) in enumerate(dataloader):
-        if params.cuda:
-            data_batch, labels_batch = data_batch.cuda(async=True), \
-                                        labels_batch.cuda(async=True)
-        data_batch, labels_batch = Variable(data_batch), Variable(labels_batch)
+# def fetch_teacher_outputs(teacher_model, dataloader, params):
+#     # set teacher_model to evaluation mode
+#     teacher_model.eval()
+#     teacher_outputs = []
+#     for i, (data_batch, labels_batch) in enumerate(dataloader):
+#         if params.cuda:
+#             data_batch, labels_batch = data_batch.cuda(async=True), \
+#                                         labels_batch.cuda(async=True)
+#         data_batch, labels_batch = Variable(data_batch), Variable(labels_batch)
 
-        output_teacher_batch = teacher_model(data_batch).data
-        teacher_outputs.append(output_teacher_batch)
+#         output_teacher_batch = teacher_model(data_batch).data
+#         teacher_outputs.append(output_teacher_batch)
 
-    return teacher_outputs
+#     return teacher_outputs
 
 # Defining train_kd & train_and_evaluate_kd functions
 
-def train_kd(model, teacher_outputs, optimizer, loss_fn_kd, dataloader, metrics, params):
+def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, params):
     """Train the model on `num_steps` batches
 
     Args:
@@ -184,6 +186,7 @@ def train_kd(model, teacher_outputs, optimizer, loss_fn_kd, dataloader, metrics,
 
     # set model to training mode
     model.train()
+    teacher_model.eval()
 
     # summary for current training loop and a running average object for loss
     summ = []
@@ -203,9 +206,7 @@ def train_kd(model, teacher_outputs, optimizer, loss_fn_kd, dataloader, metrics,
             output_batch = model(train_batch)
 
             # get one batch output from teacher_outputs list
-            output_teacher_batch = teacher_outputs[i]
-            output_teacher_batch = Variable(output_teacher_batch, requires_grad=False)
-            # output_teacher_batch = teacher_model(train_batch).detach()
+            output_teacher_batch = teacher_model(train_batch).detach()
             loss = loss_fn_kd(output_batch, labels_batch, output_teacher_batch, params)
 
             # clear previous gradients, compute gradients of all variables wrt loss
@@ -257,9 +258,6 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
 
     best_val_acc = 0.0
 
-    teacher_model.eval()
-    teacher_outputs = fetch_teacher_outputs(teacher_model, train_dataloader, params)
-    teacher_outputs_val = fetch_teacher_outputs(teacher_model, val_dataloader, params)
 
     for epoch in range(params.num_epochs):
         # Run one epoch
@@ -269,7 +267,7 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         train_kd(model, teacher_model, optimizer, loss_fn_kd, train_dataloader, metrics, params)
 
         # Evaluate for one epoch on validation set
-        val_metrics = evaluate_kd(model, teacher_outputs_val, loss_fn_kd, val_dataloader,
+        val_metrics = evaluate_kd(model, teacher_model, loss_fn_kd, val_dataloader,
                                   metrics, params)
 
         val_acc = val_metrics['accuracy']
@@ -332,37 +330,49 @@ if __name__ == '__main__':
         metrics = net.metrics
         # trigger knowledge distillation during training
         if params.teacher == "resnet18":
-            teacher_model = resnet.ResNet18().cuda() if params.cuda else resnet.ResNet18()
-            utils.load_checkpoint('experiments/base_resnet18/best.pth.tar', teacher_model)
+            teacher_model = resnet.ResNet18()
+            teacher_checkpoint = 'experiments/base_resnet18/best.pth.tar'
+
         elif params.teacher == "wrn":
-            teacher_model = wrn.wrn(depth=28, num_classes=10, widen_factor=10, dropRate=0.3)
-            teacher_model = teacher_model.cuda() if params.cuda else teacher_model
-            utils.load_checkpoint('experiments/base_wrn/best.pth.tar', teacher_model)
+            teacher_model = wrn.WideResNet(depth=28, num_classes=10, widen_factor=10,
+                                           dropRate=0.3)
+            teacher_checkpoint = 'experiments/base_wrn/best.pth.tar'
+            teacher_model = nn.DataParallel(teacher_model).cuda()
+
+        # teacher_model = teacher_model.cuda() if params.cuda else teacher_model
+        utils.load_checkpoint(teacher_checkpoint, teacher_model)
+
         # Train the model with KD
         logging.info("Starting training for {} epoch(s)".format(params.num_epochs))
         train_and_evaluate_kd(model, teacher_model, train_dl, dev_dl, optimizer, loss_fn_kd,
                               metrics, params, args.model_dir, args.restore_file)
 
-    elif params.model_version == "wrn":
-        model = wrn.wrn(depth=28, num_classes=10, widen_factor=10, dropRate=0.3)
-        model = model.cuda() if params.cuda else model
-        optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
-                              momentum=0.9, weight_decay=5e-4)
-        # fetch loss function and metrics
-        loss_fn = wrn.loss_fn
-        metrics = wrn.metrics
-        # Train the model
-        logging.info("Starting training for {} epoch(s)".format(params.num_epochs))
-        train_and_evaluate(model, train_dl, dev_dl, optimizer, loss_fn, metrics, params,
-                           args.model_dir, args.restore_file)
+    # non-KD mode: regular training (with CrossEntropy) 
+    else:
+        if params.model_version == "cnn":
+            model = net.Net(params).cuda() if params.cuda else net.Net(params)
+            optimizer = optim.Adam(model.parameters(), lr=params.learning_rate)
+            # fetch loss function and metrics
+            loss_fn = net.loss_fn
+            metrics = net.metrics
 
-    elif params.model_version == "resnet18":
-        model = resnet.ResNet18().cuda() if params.cuda else resnet.ResNet18()
-        optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
-                              momentum=0.9, weight_decay=5e-4)
-        # fetch loss function and metrics
-        loss_fn = resnet.loss_fn
-        metrics = resnet.metrics
+        elif params.model_version == "wrn":
+            model = wrn.wrn(depth=28, num_classes=10, widen_factor=10, dropRate=0.3)
+            model = model.cuda() if params.cuda else model
+            optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
+                                  momentum=0.9, weight_decay=5e-4)
+            # fetch loss function and metrics
+            loss_fn = wrn.loss_fn
+            metrics = wrn.metrics
+
+        elif params.model_version == "resnet18":
+            model = resnet.ResNet18().cuda() if params.cuda else resnet.ResNet18()
+            optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
+                                  momentum=0.9, weight_decay=5e-4)
+            # fetch loss function and metrics
+            loss_fn = resnet.loss_fn
+            metrics = resnet.metrics
+
         # Train the model
         logging.info("Starting training for {} epoch(s)".format(params.num_epochs))
         train_and_evaluate(model, train_dl, dev_dl, optimizer, loss_fn, metrics, params,

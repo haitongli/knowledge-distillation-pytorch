@@ -65,8 +65,11 @@ def evaluate(model, loss_fn, dataloader, metrics, params):
     logging.info("- Eval metrics : " + metrics_string)
     return metrics_mean
 
+'''For knowledge distillation, validation loss doesn't mean much as the teacher model
+   won't be involved in determining the prediction (and its accuracy).
+'''
 
-def evaluate_kd(model, teacher_model, loss_fn_kd, dataloader, metrics, params):
+def evaluate_kd(model, dataloader, metrics, params):
     """Evaluate the model on `num_steps` batches.
 
     Args:
