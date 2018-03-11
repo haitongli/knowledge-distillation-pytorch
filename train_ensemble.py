@@ -409,7 +409,8 @@ if __name__ == '__main__':
             teacher_ensemble = {}
             teacher_ensemble["resnet18"] = resnet.ResNet18()
             teacher_checkpoint = 'experiments/base_resnet18/best.pth.tar'
-            teacher_model = teacher_model.cuda() if params.cuda else teacher_model
+            teacher_ensemble["resnet18"] = teacher_ensemble["resnet18"].cuda() if params.cuda \
+                                           else teacher_ensemble["resnet18"]
             utils.load_checkpoint(teacher_checkpoint, teacher_ensemble["resnet18"])
             
             teacher_ensemble["wrn"] = wrn.WideResNet(depth=28, num_classes=10, widen_factor=10,
