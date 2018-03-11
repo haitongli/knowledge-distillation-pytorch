@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-__all__ = ['wrn']
+# __all__ = ['wrn']
 
 class BasicBlock(nn.Module):
     def __init__(self, in_planes, out_planes, stride, dropRate=0.0):
@@ -86,12 +86,12 @@ class WideResNet(nn.Module):
         out = out.view(-1, self.nChannels)
         return self.fc(out)
 
-def wrn(**kwargs):
-    """
-    Constructs a Wide Residual Networks.
-    """
-    model = WideResNet(**kwargs)
-    return model
+# def wrn(**kwargs):
+#     """
+#     Constructs a Wide Residual Networks.
+#     """
+#     model = WideResNet(**kwargs)
+#     return model
 
 
 def loss_fn(outputs, labels):

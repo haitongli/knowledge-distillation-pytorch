@@ -55,9 +55,12 @@ if __name__ == "__main__":
     #     job_name = "learning_rate_{}".format(learning_rate)
     #     launch_training_job(args.parent_dir, job_name, params)
 
-    # Perform hypersearch (grid): KD temperature, alpha
-    # alphas = [0.95, 0.9, 0.7, 0.5, 0.3]
-    # temperatures = [30, 20, 10, 5, 2]
+    '''
+    Temperature and alpha search for KD on CNN
+    Perform hypersearch (grid): KD temperature, alpha
+    '''
+    alphas = [0.95, 0.9, 0.7, 0.5, 0.3]
+    temperatures = [30, 20, 10, 5, 2]
     alphas = [0.99, 0.999]
     temperatures = [20, 2]
 
@@ -70,5 +73,8 @@ if __name__ == "__main__":
             # Launch job (name has to be unique)
             job_name = "alpha_{}_Temp_{}".format(alpha, temperature)
             launch_training_job(args.parent_dir, job_name, params)
-        
+   
+    '''Unlabel KD'''
+
+
 

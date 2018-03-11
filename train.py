@@ -330,48 +330,46 @@ if __name__ == '__main__':
         metrics = net.metrics
         # trigger knowledge distillation during training
         if params.teacher == "resnet18":
-            teacher_model = resnet.ResNet18().cuda() if params.cuda else resnet.ResNet18()
-            utils.load_checkpoint('experiments/base_resnet18/best.pth.tar', teacher_model)
+            teacher_model = resnet.ResNet18()
+            teacher_checkpoint = 'experiments/base_resnet18/best.pth.tar'
         elif params.teacher == "wrn":
             teacher_model = wrn.wrn(depth=28, num_classes=10, widen_factor=10, dropRate=0.3)
-            teacher_model = teacher_model.cuda() if params.cuda else teacher_model
-            utils.load_checkpoint('experiments/base_wrn/best.pth.tar', teacher_model)
+            teacher_checkpoint = 'experiments/base_wrn/best.pth.tar'
+
+        teacher_model = teacher_model.cuda() if params.cuda else teacher_model
+        utils.load_checkpoint(teacher_checkpoint, teacher_model)
+
         # Train the model with KD
         logging.info("Starting training for {} epoch(s)".format(params.num_epochs))
         train_and_evaluate_kd(model, teacher_model, train_dl, dev_dl, optimizer, loss_fn_kd,
                               metrics, params, args.model_dir, args.restore_file)
 
-    elif params.model_version == "wrn":
-        model = wrn.wrn(depth=28, num_classes=10, widen_factor=10, dropRate=0.3)
-        model = model.cuda() if params.cuda else model
-        optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
-                              momentum=0.9, weight_decay=5e-4)
-        # fetch loss function and metrics
-        loss_fn = wrn.loss_fn
-        metrics = wrn.metrics
-        # Train the model
-        logging.info("Starting training for {} epoch(s)".format(params.num_epochs))
-        train_and_evaluate(model, train_dl, dev_dl, optimizer, loss_fn, metrics, params,
-                           args.model_dir, args.restore_file)
+    # non-KD mode: regular training (with CrossEntropy) 
+    else:
+        if params.model_version == "cnn":
+            model = net.Net(params).cuda() if params.cuda else net.Net(params)
+            optimizer = optim.Adam(model.parameters(), lr=params.learning_rate)
+            # fetch loss function and metrics
+            loss_fn = net.loss_fn
+            metrics = net.metrics
 
-    elif params.model_version == "resnet18":
-        model = resnet.ResNet18().cuda() if params.cuda else resnet.ResNet18()
-        optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
-                              momentum=0.9, weight_decay=5e-4)
-        # fetch loss function and metrics
-        loss_fn = resnet.loss_fn
-        metrics = resnet.metrics
-        # Train the model
-        logging.info("Starting training for {} epoch(s)".format(params.num_epochs))
-        train_and_evaluate(model, train_dl, dev_dl, optimizer, loss_fn, metrics, params,
-                           args.model_dir, args.restore_file)
+        elif params.model_version == "wrn":
+            model = wrn.wrn(depth=28, num_classes=10, widen_factor=10, dropRate=0.3)
+            model = model.cuda() if params.cuda else model
+            optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
+                                  momentum=0.9, weight_decay=5e-4)
+            # fetch loss function and metrics
+            loss_fn = wrn.loss_fn
+            metrics = wrn.metrics
 
-    elif params.model_version == "cnn":
-        model = net.Net(params).cuda() if params.cuda else net.Net(params)
-        optimizer = optim.Adam(model.parameters(), lr=params.learning_rate)
-        # fetch loss function and metrics
-        loss_fn = net.loss_fn
-        metrics = net.metrics
+        elif params.model_version == "resnet18":
+            model = resnet.ResNet18().cuda() if params.cuda else resnet.ResNet18()
+            optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
+                                  momentum=0.9, weight_decay=5e-4)
+            # fetch loss function and metrics
+            loss_fn = resnet.loss_fn
+            metrics = resnet.metrics
+
         # Train the model
         logging.info("Starting training for {} epoch(s)".format(params.num_epochs))
         train_and_evaluate(model, train_dl, dev_dl, optimizer, loss_fn, metrics, params,
