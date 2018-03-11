@@ -131,7 +131,7 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
         train(model, optimizer, loss_fn, train_dataloader, metrics, params)
 
         # Evaluate for one epoch on validation set
-        val_metrics = evaluate(model, loss_fn, val_dataloader, metrics, params)
+        val_metrics = evaluate(model, loss_fn, val_dataloader, metrics, params)        
 
         val_acc = val_metrics['accuracy']
         is_best = val_acc>=best_val_acc
@@ -155,6 +155,11 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
         # Save latest val metrics in a json file in the model directory
         last_json_path = os.path.join(model_dir, "metrics_val_last_weights.json")
         utils.save_dict_to_json(val_metrics, last_json_path)
+
+        if epoch == params.num_epochs - 1:
+            train_metrics = evaluate(model, loss_fn, train_dataloader, metrics, params)
+            last_json_path = os.path.join(model_dir, "metrics_train_last_weights.json")
+            utils.save_dict_to_json(train_metrics, last_json_path)
 
 
 # Helper: get [batch_idx, teacher_outputs] list by running teacher model once
@@ -305,6 +310,11 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         # Save latest val metrics in a json file in the model directory
         last_json_path = os.path.join(model_dir, "metrics_val_last_weights.json")
         utils.save_dict_to_json(val_metrics, last_json_path)
+
+        if epoch == params.num_epochs - 1:
+            train_metrics = evaluate_kd(model, train_dataloader, metrics, params)
+            last_json_path = os.path.join(model_dir, "metrics_train_last_weights.json")
+            utils.save_dict_to_json(train_metrics, last_json_path)
 
 
 if __name__ == '__main__':
