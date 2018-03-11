@@ -67,7 +67,7 @@ def fetch_subset_dataloader(types, params):
     testset = torchvision.datasets.CIFAR10(root='./data-cifar10', train=False,
         download=True, transform=dev_transformer)
 
-    trainset_size = len(train_dataset)
+    trainset_size = len(trainset)
     indices = list(range(trainset_size))
     split = int(np.floor(params.subset_percent * trainset_size))
     np.random.seed(230)
