@@ -139,11 +139,11 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
         is_best = val_acc>=best_val_acc
 
         # Save weights
-        utils.save_checkpoint({'epoch': epoch + 1,
-                               'state_dict': model.state_dict(),
-                               'optim_dict' : optimizer.state_dict()},
-                               is_best=is_best,
-                               checkpoint=model_dir)
+        # utils.save_checkpoint({'epoch': epoch + 1,
+        #                        'state_dict': model.state_dict(),
+        #                        'optim_dict' : optimizer.state_dict()},
+        #                        is_best=is_best,
+        #                        checkpoint=model_dir)
 
         # If best_eval, best_save_path
         if is_best:
@@ -271,7 +271,9 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         utils.load_checkpoint(restore_path, model, optimizer)
 
     best_val_acc = 0.0
-    board_logger = utils.Board_Logger(os.path.join(model_dir, 'board_logs'))
+    
+    #Tensorboard logger setup
+    # board_logger = utils.Board_Logger(os.path.join(model_dir, 'board_logs'))
 
     # Compute teacher outputs using teacher_model under eval() mode
     loading_start = time.time()
@@ -304,11 +306,11 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         is_best = val_acc>=best_val_acc
 
         # Save weights
-        utils.save_checkpoint({'epoch': epoch + 1,
-                               'state_dict': model.state_dict(),
-                               'optim_dict' : optimizer.state_dict()},
-                               is_best=is_best,
-                               checkpoint=model_dir)
+        # utils.save_checkpoint({'epoch': epoch + 1,
+        #                        'state_dict': model.state_dict(),
+        #                        'optim_dict' : optimizer.state_dict()},
+        #                        is_best=is_best,
+        #                        checkpoint=model_dir)
 
         # If best_eval, best_save_path
         if is_best:
@@ -324,20 +326,20 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         utils.save_dict_to_json(val_metrics, last_json_path)
 
 
-        #============ TensorBoard logging ============#
-        # (1) Log the scalar values
-        info = {
-            'val accuracy': val_acc
-        }
+        # #============ TensorBoard logging ============#
+        # # (1) Log the scalar values
+        # info = {
+        #     'val accuracy': val_acc
+        # }
 
-        for tag, value in info.items():
-            board_logger.scalar_summary(tag, value, epoch+1)
+        # for tag, value in info.items():
+        #     board_logger.scalar_summary(tag, value, epoch+1)
 
-        # (2) Log values and gradients of the parameters (histogram)
-        for tag, value in model.named_parameters():
-            tag = tag.replace('.', '/')
-            board_logger.histo_summary(tag, value.data.cpu().numpy(), epoch+1)
-            # board_logger.histo_summary(tag+'/grad', value.grad.data.cpu().numpy(), epoch+1)
+        # # (2) Log values and gradients of the parameters (histogram)
+        # for tag, value in model.named_parameters():
+        #     tag = tag.replace('.', '/')
+        #     board_logger.histo_summary(tag, value.data.cpu().numpy(), epoch+1)
+        #     # board_logger.histo_summary(tag+'/grad', value.grad.data.cpu().numpy(), epoch+1)
 
         # if epoch == params.num_epochs - 1:
         #     train_metrics = evaluate_kd(model, train_dataloader, metrics, params)
