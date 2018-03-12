@@ -417,6 +417,7 @@ if __name__ == '__main__':
         utils.load_checkpoint(teacher_checkpoint, teacher_model)
 
         # Train the model with KD
+        logging.info("Experiment: model version: {}".format(params.model_version))
         logging.info("Starting training for {} epoch(s)".format(params.num_epochs))
         logging.info("First, loading the teacher model and computing its outputs...")
         train_and_evaluate_kd(model, teacher_model, train_dl, dev_dl, optimizer, loss_fn_kd,
