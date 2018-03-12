@@ -271,6 +271,7 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         utils.load_checkpoint(restore_path, model, optimizer)
 
     best_val_acc = 0.0
+    board_logger = utils.Board_Logger(os.path.join(model_dir, 'board_logs'))
 
     # Compute teacher outputs using teacher_model under eval() mode
     loading_start = time.time()
@@ -321,6 +322,22 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         # Save latest val metrics in a json file in the model directory
         last_json_path = os.path.join(model_dir, "metrics_val_last_weights.json")
         utils.save_dict_to_json(val_metrics, last_json_path)
+
+
+        #============ TensorBoard logging ============#
+        # (1) Log the scalar values
+        info = {
+            'val accuracy': val_acc
+        }
+
+        for tag, value in info.items():
+            board_logger.scalar_summary(tag, value, epoch+1)
+
+        # (2) Log values and gradients of the parameters (histogram)
+        for tag, value in model.named_parameters():
+            tag = tag.replace('.', '/')
+            board_logger.histo_summary(tag, to_np(value), epoch+1)
+            board_logger.histo_summary(tag+'/grad', to_np(value.grad), epoch+1)
 
         # if epoch == params.num_epochs - 1:
         #     train_metrics = evaluate_kd(model, train_dataloader, metrics, params)
@@ -435,4 +452,3 @@ if __name__ == '__main__':
         logging.info("Starting training for {} epoch(s)".format(params.num_epochs))
         train_and_evaluate(model, train_dl, dev_dl, optimizer, loss_fn, metrics, params,
                            args.model_dir, args.restore_file)
-

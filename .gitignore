@@ -5,7 +5,7 @@
 data-cifar10/
 
 #log files (may or may not want to keep them, depending on whether need to use aws)
-*.log
+#*.log
 
 #sublime-text settings
 kd-pytorch.sublime*

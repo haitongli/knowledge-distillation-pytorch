@@ -71,7 +71,3 @@ if __name__ == "__main__":
             # Launch job (name has to be unique)
             job_name = "alpha_{}_Temp_{}".format(alpha, temperature)
             launch_training_job(args.parent_dir, job_name, params)
-   
-
-
-
