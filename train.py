@@ -336,8 +336,8 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         # (2) Log values and gradients of the parameters (histogram)
         for tag, value in model.named_parameters():
             tag = tag.replace('.', '/')
-            board_logger.histo_summary(tag, to_np(value), epoch+1)
-            board_logger.histo_summary(tag+'/grad', to_np(value.grad), epoch+1)
+            board_logger.histo_summary(tag, value.data.cpu().numpy(), epoch+1)
+            # board_logger.histo_summary(tag+'/grad', value.grad.data.cpu().numpy(), epoch+1)
 
         # if epoch == params.num_epochs - 1:
         #     train_metrics = evaluate_kd(model, train_dataloader, metrics, params)
