@@ -59,8 +59,14 @@ if __name__ == "__main__":
     Temperature and alpha search for KD on CNN
     Perform hypersearch (grid): KD temperature, alpha
     '''
-    alphas = [0.999, 0.95, 0.5, 0.1, 0.01]
-    temperatures = [40, 20, 10, 8, 6, 4.5, 3, 2, 1]
+    
+    # # hyperparameters used for subset experiments:
+    # alphas = [0.999, 0.95, 0.5, 0.1, 0.01]
+    # temperatures = [40, 20, 10, 8, 6, 4.5, 3, 2, 1]
+
+    # hyperparameters used for cnn-distill-nodropout experiments:
+    alphas = [0.99, 0.95, 0.5, 0.1, 0.05]
+    temperatures = [20., 10., 8., 6., 4.5, 3., 2., 1.5]
 
     for alpha in alphas:
         for temperature in temperatures:
