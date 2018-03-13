@@ -127,10 +127,6 @@ def loss_fn(outputs, labels):
     """
     Compute the cross entropy loss given outputs and labels.
 
-    Args:
-        outputs: (Variable) dimension batch_size x 6 - output of the model
-        labels: (Variable) dimension batch_size, where each element is a value in [0, 1, 2, 3, 4, 5]
-
     Returns:
         loss (Variable): cross entropy loss for all images in the batch
 
@@ -144,10 +140,6 @@ def accuracy(outputs, labels):
     """
     Compute the accuracy, given the outputs and labels for all images.
 
-    Args:
-        outputs: (np.ndarray) dimension batch_size x 6 - log softmax output of the model
-        labels: (np.ndarray) dimension batch_size, where each element is a value in [0, 1, 2, 3, 4, 5]
-
     Returns: (float) accuracy in [0,1]
     """
     outputs = np.argmax(outputs, axis=1)
@@ -159,4 +151,3 @@ metrics = {
     'accuracy': accuracy,
     # could add more metrics such as accuracy for each token type
 }
-

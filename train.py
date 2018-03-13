@@ -21,6 +21,8 @@ import model.data_loader as data_loader
 import model.resnet as resnet
 import model.wrn as wrn
 import model.densenet as densenet
+import model.resnext as resnext
+import model.preresnet as preresnet
 from evaluate import evaluate, evaluate_kd
 
 parser = argparse.ArgumentParser()
@@ -415,6 +417,16 @@ if __name__ == '__main__':
             teacher_model = densenet.DenseNet(depth=100, growthRate=12)
             teacher_checkpoint = 'experiments/base_densenet/best.pth.tar'
             teacher_model = nn.DataParallel(teacher_model).cuda()
+
+        elif params.teacher == "resnext29":
+            teacher_model = resnext.CifarResNeXt(cardinality=8, depth=29, num_classes=10)
+            teacher_checkpoint = 'experiments/base_resnext29/best.pth.tar'
+            teacher_model == nn.DataParallel(teacher_model).cuda()
+
+        elif params.teacher == "preresnet110":
+            teacher_model = preresnet.PreResNet(depth=110)
+            teacher_checkpoint = 'experiments/base_preresnet110/best.pth.tar'
+            teacher_model == nn.DataParallel(teacher_model).cuda()
 
         utils.load_checkpoint(teacher_checkpoint, teacher_model)
 
