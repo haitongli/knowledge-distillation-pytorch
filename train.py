@@ -424,7 +424,7 @@ if __name__ == '__main__':
             teacher_model = nn.DataParallel(teacher_model).cuda()
 
         elif params.teacher == "preresnet110":
-            teacher_model = preresnet.PreResNet(depth=110)
+            teacher_model = preresnet.PreResNet(depth=110, num_classes=10)
             teacher_checkpoint = 'experiments/base_preresnet110/best.pth.tar'
             teacher_model = nn.DataParallel(teacher_model).cuda()
 
