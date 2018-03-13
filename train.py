@@ -421,12 +421,12 @@ if __name__ == '__main__':
         elif params.teacher == "resnext29":
             teacher_model = resnext.CifarResNeXt(cardinality=8, depth=29, num_classes=10)
             teacher_checkpoint = 'experiments/base_resnext29/best.pth.tar'
-            teacher_model == nn.DataParallel(teacher_model).cuda()
+            teacher_model = nn.DataParallel(teacher_model).cuda()
 
         elif params.teacher == "preresnet110":
             teacher_model = preresnet.PreResNet(depth=110)
             teacher_checkpoint = 'experiments/base_preresnet110/best.pth.tar'
-            teacher_model == nn.DataParallel(teacher_model).cuda()
+            teacher_model = nn.DataParallel(teacher_model).cuda()
 
         utils.load_checkpoint(teacher_checkpoint, teacher_model)
 
