@@ -69,7 +69,8 @@ if __name__ == "__main__":
     # temperatures = [40, 20, 10, 8, 6, 4.5, 3, 2, 1]
 
     # hyperparameters used for cnn-distill-nodropout/noaugment experiments:
-    alphas = [0.99, 0.95, 0.5, 0.1, 0.05]
+    # alphas = [0.99, 0.95, 0.5, 0.1, 0.05]
+    alphas = [0.1, 0.05]
     temperatures = [20., 10., 8., 6., 4.5, 3., 2., 1.5]
 
     logging.info("Searching hyperparameters...")
