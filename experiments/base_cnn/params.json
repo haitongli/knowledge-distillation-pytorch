@@ -1,5 +1,7 @@
 {
     "model_version": "cnn",
+    "subset_percent": 1.0,
+    "augmentation": "no",
     "learning_rate": 1e-3,
     "batch_size": 128,
     "num_epochs": 30,

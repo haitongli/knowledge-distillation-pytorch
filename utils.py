@@ -162,26 +162,8 @@ def load_checkpoint(checkpoint, model, optimizer=None):
     return checkpoint
 
 
-def load_checkpoint_gpu(checkpoint, model, optimizer=None):
-
-    if not os.path.exists(checkpoint):
-        raise("File doesn't exist {}".format(checkpoint))
-
-    # original saved file with DataParallel
-    state_dict = torch.load(checkpoint)
-    # create new OrderedDict that does not contain `module.`
-    # from collections import OrderedDict
-    new_state_dict = OrderedDict()
-    for k, v in state_dict.items():
-        name = k[7:] # remove `module.`
-        new_state_dict[name] = v
-    # load params
-    model.load_state_dict(new_state_dict['state_dict'])
-
-    return new_state_dict
-
-
 class Board_Logger(object):
+    """Tensorboard log utility"""
     
     def __init__(self, log_dir):
         """Create a summary writer logging to log_dir."""

@@ -1,6 +1,7 @@
 {
     "model_version": "resnet18_distill",
     "subset_percent": 1.0,
+    "augmentation": "yes",
     "teacher": "densenet",
     "alpha": 0.95,
     "temperature": 6,

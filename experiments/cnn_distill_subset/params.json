@@ -1,6 +1,7 @@
 {
     "model_version": "cnn_distill",
     "subset_percent": 0.05,
+    "augmentation": "yes",
     "teacher": "resnet18",
     "alpha": 0.95,
     "temperature": 2,

@@ -13,13 +13,20 @@ def fetch_dataloader(types, params):
     """
 
     #data transformers on train and dev('test') sets
-    train_transformer = transforms.Compose([
-        transforms.RandomCrop(32, padding=4),
-        transforms.RandomHorizontalFlip(),  # randomly flip image horizontally
-        transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))])
-        # normalization values:
-        # https://github.com/Armour/pytorch-nn-practice/blob/master/utils/meanstd.py
+    if params.augmentation == "yes":
+        train_transformer = transforms.Compose([
+            transforms.RandomCrop(32, padding=4),
+            transforms.RandomHorizontalFlip(),  # randomly flip image horizontally
+            transforms.ToTensor(),
+            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))])
+            # normalization values:
+            # https://github.com/Armour/pytorch-nn-practice/blob/master/utils/meanstd.py
+    else:
+        train_transformer = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))])
+            # normalization values:
+            # https://github.com/Armour/pytorch-nn-practice/blob/master/utils/meanstd.py
 
     # loader for development, no horizontal flip
     dev_transformer = transforms.Compose([

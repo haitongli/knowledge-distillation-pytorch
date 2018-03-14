@@ -4,8 +4,8 @@ import argparse
 import os
 from subprocess import check_call
 import sys
-
 import utils
+import logging
 
 
 PYTHON = sys.executable
@@ -44,6 +44,10 @@ if __name__ == "__main__":
     assert os.path.isfile(json_path), "No json configuration file found at {}".format(json_path)
     params = utils.Params(json_path)
 
+    # Set the logger
+    utils.set_logger(os.path.join(args.parent_dir, 'search_hyperparameters.log'))
+
+
     # # Perform hypersearch over one parameter
     # learning_rates = [1e-4, 1e-3, 1e-2]
 
@@ -64,9 +68,13 @@ if __name__ == "__main__":
     # alphas = [0.999, 0.95, 0.5, 0.1, 0.01]
     # temperatures = [40, 20, 10, 8, 6, 4.5, 3, 2, 1]
 
-    # hyperparameters used for cnn-distill-nodropout experiments:
+    # hyperparameters used for cnn-distill-nodropout/noaugment experiments:
     alphas = [0.99, 0.95, 0.5, 0.1, 0.05]
     temperatures = [20., 10., 8., 6., 4.5, 3., 2., 1.5]
+
+    logging.info("Searching hyperparameters...")
+    logging.info("alphas: {}".format(alphas))
+    logging.info("temperatures: {}".format(temperatures))
 
     for alpha in alphas:
         for temperature in temperatures:
