@@ -1,5 +1,5 @@
 {
-    "model_version": "resnet18_distill",
+    "model_version": "resnet18",
     "subset_percent": 0.2,
     "augmentation": "yes",
     "teacher": "resnext29",

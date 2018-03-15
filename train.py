@@ -118,7 +118,7 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
 
     # learning rate schedulers for different models:
     if params.model_version == "resnet18":
-        scheduler = StepLR(optimizer, step_size=100, gamma=0.1)
+        scheduler = StepLR(optimizer, step_size=150, gamma=0.1)
     elif params.model_version == "wrn":
         scheduler = StepLR(optimizer, step_size=60, gamma=0.2)
     elif params.model_version == "cnn":
