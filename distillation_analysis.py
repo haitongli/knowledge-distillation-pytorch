@@ -3,7 +3,6 @@
 import argparse
 import logging
 import os
-
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -13,6 +12,7 @@ import model.net as net
 import model.resnet as resnet
 import model.data_loader as data_loader
 from torchnet.meter import ConfusionMeter
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model_dir', default='experiments/base_model', help="Directory of params.json")
@@ -49,8 +49,8 @@ def model_analysis(model, dataloader, params, temperature=1., num_classes=10):
             output_batch = output_batch.data.cpu().numpy()
             labels_batch = labels_batch.data.cpu().numpy()
 
-            predict_correct_batch = 1 * (np.argmax(output_batch, axis=1) == labels_batch)
-            predict_correct.append(predict_correct_batch)
+            predict_correct_batch = (np.argmax(output_batch, axis=1) == labels_batch).astype(int)
+            predict_correct.append(np.reshape(predict_correct_batch, (labels_batch.size, 1)))
 
             t.update()
 
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     if params.cuda: torch.cuda.manual_seed(230)
         
     # Get the logger
-    utils.set_logger(os.path.join(args.model_dir, 'evaluate.log'))
+    utils.set_logger(os.path.join(args.model_dir, 'analysis.log'))
 
     # Create the input data pipeline
     logging.info("Loading the dataset...")
@@ -95,7 +95,7 @@ if __name__ == '__main__':
     # fetch loss function and metrics
     metrics = resnet.metrics
     
-    logging.info("Starting evaluation...")
+    logging.info("Starting analysis...")
 
     # Reload weights from the saved file
     utils.load_checkpoint(os.path.join(args.model_dir, args.restore_file + '.pth.tar'), model)
@@ -103,10 +103,9 @@ if __name__ == '__main__':
     # Evaluate and analyze
     softmax_scores, predict_correct, confusion_matrix = model_analysis(model, dev_dl, params)
 
-    save_path = os.path.join(args.model_dir, 'confusion_matrix.txt')
-    np.savetxt(save_path, confusion_matrix)
+    results = {'softmax_scores': softmax_scores, 'predict_correct': predict_correct,
+               'confusion_matrix': confusion_matrix}
 
-    # save_path = os.path.join(args.model_dir, \
-    #                          "distillation_analysis_{}.json".format(args.restore_file))
-    # utils.save_dict_to_json(test_metrics, save_path)
-
+    for k, v in results.items():
+        save_path = os.path.join(args.model_dir, k + '.txt')
+        np.savetxt(save_path, v) 
