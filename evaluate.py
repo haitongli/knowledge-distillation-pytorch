@@ -9,11 +9,12 @@ import torch
 from torch.autograd import Variable
 import utils
 import model.net as net
+import model.resnet as resnet
 import model.data_loader as data_loader
+from torchnet.meter import ConfusionMeter
 
 parser = argparse.ArgumentParser()
-# parser.add_argument('--data_dir', default='data/64x64_SIGNS', help="Directory containing the dataset")
-parser.add_argument('--model_dir', default='experiments/base_model', help="Directory containing params.json")
+parser.add_argument('--model_dir', default='experiments/base_model', help="Directory of params.json")
 parser.add_argument('--restore_file', default='best', help="name of the file in --model_dir \
                      containing weights to load")
 
@@ -65,9 +66,6 @@ def evaluate(model, loss_fn, dataloader, metrics, params):
     logging.info("- Eval metrics : " + metrics_string)
     return metrics_mean
 
-'''For knowledge distillation, validation loss doesn't mean much as the teacher model
-   won't be involved in determining the prediction (and its accuracy).
-'''
 
 def evaluate_kd(model, dataloader, metrics, params):
     """Evaluate the model on `num_steps` batches.
@@ -141,25 +139,23 @@ if __name__ == '__main__':
     utils.set_logger(os.path.join(args.model_dir, 'evaluate.log'))
 
     # Create the input data pipeline
-    logging.info("Creating the dataset...")
+    logging.info("Loading the dataset...")
 
     # fetch dataloaders
-    train_dl = data_loader.fetch_dataloader('train', params)
+    # train_dl = data_loader.fetch_dataloader('train', params)
     dev_dl = data_loader.fetch_dataloader('dev', params)
-
-    # # fetch dataloaders
-    dataloaders = data_loader.fetch_dataloader(['test'], args.data_dir, params)
-    # dev_dl = dataloaders['test']
 
     logging.info("- done.")
 
-    # Define the model
-    model = net.Net(params).cuda() if params.cuda else net.Net(params)
+    # Define the model graph
+    model = resnet.ResNet18().cuda() if params.cuda else resnet.ResNet18()
+    optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
+                          momentum=0.9, weight_decay=5e-4)
+    # fetch loss function and metrics
+    loss_fn_kd = net.loss_fn_kd
+    metrics = resnet.metrics
     
-    loss_fn = net.loss_fn
-    metrics = net.metrics
-    
-    logging.info("Starting evaluation")
+    logging.info("Starting evaluation...")
 
     # Reload weights from the saved file
     utils.load_checkpoint(os.path.join(args.model_dir, args.restore_file + '.pth.tar'), model)
