@@ -1,3 +1,7 @@
+#produced images
+*.png
+*.tiff
+
 #Dataset and large files
 *.tar.gz
 *.pth.tar

@@ -18,7 +18,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--model_dir', default='experiments/base_model', help="Directory of params.json")
 parser.add_argument('--restore_file', default='best', help="name of the file in --model_dir \
                      containing weights to load")
-
+parser.add_argument('--temperature', default=1., help="temperature used for softmax output")
 
 def model_analysis(model, dataloader, params, temperature=1., num_classes=10):
     """
@@ -101,11 +101,13 @@ if __name__ == '__main__':
     utils.load_checkpoint(os.path.join(args.model_dir, args.restore_file + '.pth.tar'), model)
 
     # Evaluate and analyze
-    softmax_scores, predict_correct, confusion_matrix = model_analysis(model, dev_dl, params)
+    softmax_scores, predict_correct, confusion_matrix = model_analysis(model, dev_dl, params
+                                                                       args.temperature)
 
     results = {'softmax_scores': softmax_scores, 'predict_correct': predict_correct,
                'confusion_matrix': confusion_matrix}
 
     for k, v in results.items():
-        save_path = os.path.join(args.model_dir, k + '.txt')
-        np.savetxt(save_path, v) 
+        filename = 'temp' + str(args.temperature) + '_' + k + '.txt'
+        save_path = os.path.join(args.model_dir, filename)
+        np.savetxt(save_path, v)
