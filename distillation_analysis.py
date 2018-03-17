@@ -60,7 +60,7 @@ def model_analysis(model, dataloader, params, temperature=1., num_classes=10):
     softmax_scores = np.vstack(softmax_scores)
     predict_correct = np.vstack(predict_correct)
 
-    return softmax_scores, predict_correct, confusion_matrix.value()
+    return softmax_scores, predict_correct, confusion_matrix.value().astype(int)
 
 
 if __name__ == '__main__':
