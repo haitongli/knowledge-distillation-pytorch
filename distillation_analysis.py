@@ -19,7 +19,8 @@ parser.add_argument('--model_dir', default='experiments/base_model', help="Direc
 parser.add_argument('--restore_file', default='best', help="name of the file in --model_dir \
                      containing weights to load")
 parser.add_argument('--dataset', default='dev', help="dataset to analze the model on")
-parser.add_argument('--temperature', default=1., help="temperature used for softmax output")
+parser.add_argument('--temperature', type=float, default=1.0, \
+                    help="temperature used for softmax output")
 
 def model_analysis(model, dataloader, params, temperature=1., num_classes=10):
     """
