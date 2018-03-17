@@ -22,6 +22,7 @@ parser.add_argument('--dataset', default='dev', help="dataset to analze the mode
 parser.add_argument('--temperature', type=float, default=1.0, \
                     help="temperature used for softmax output")
 
+
 def model_analysis(model, dataloader, params, temperature=1., num_classes=10):
     """
         Generate Confusion Matrix on evaluation set
@@ -111,6 +112,6 @@ if __name__ == '__main__':
                'confusion_matrix': confusion_matrix}
 
     for k, v in results.items():
-        filename = 'temp' + str(args.temperature) + '_' + k + '.txt'
+        filename = args.dataset + '_temp' + str(args.temperature) + '_' + k + '.txt'
         save_path = os.path.join(args.model_dir, filename)
         np.savetxt(save_path, v)
