@@ -101,7 +101,7 @@ if __name__ == '__main__':
     utils.load_checkpoint(os.path.join(args.model_dir, args.restore_file + '.pth.tar'), model)
 
     # Evaluate and analyze
-    softmax_scores, predict_correct, confusion_matrix = model_analysis(model, dev_dl, params
+    softmax_scores, predict_correct, confusion_matrix = model_analysis(model, dev_dl, params,
                                                                        args.temperature)
 
     results = {'softmax_scores': softmax_scores, 'predict_correct': predict_correct,
