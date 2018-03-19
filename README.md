@@ -30,7 +30,15 @@
 * ./data_analysis/: matplotlib scripts for data analysis on KD 
 
 
+## Note:
+
+* Since training with KD requires access to pre-trained models (in the eval() state), I will upload "best.pth.tar" checkpoints for teacher models (WideResNet, ResNext, PreResNet, DenseNet) somewhere else soon
+
+* Meanwhile, ResNet18 can be trained using train.py with specificed model name, which can then be used as the teacher model to train shallow CNN as described below
+
 ## Train (dataset: CIFAR-10)
+
+Note: all the hyperparameters can be found and modified in 'params.json' files
 
 -- Train a 5-layer CNN with knowledge distilled from a pre-trained ResNet18 model
 ```
@@ -51,7 +59,6 @@ python search_hyperparams.py --parent_dir experiments/cnn_distill_alpha_temp
 ```
 python synthesize_results.py --parent_dir experiments/cnn_distill_alpha_temp
 ```
-
 
 
 ## Results
