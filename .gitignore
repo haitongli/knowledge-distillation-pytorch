@@ -1,3 +1,23 @@
+#produced images
+*.png
+*.tiff
+
+#Dataset and large files
+*.tar.gz
+*.pth.tar
+*.tar
+data-cifar10/
+
+#log files (may or may not want to keep them, depending on whether need to use aws)
+#*.log
+board_logs/
+*events.out.tfevents*
+
+.DS_Store
+
+#sublime-text settings
+kd-pytorch.sublime*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -51,7 +71,6 @@ coverage.xml
 *.pot
 
 # Django stuff:
-*.log
 local_settings.py
 
 # Flask stuff:

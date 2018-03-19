@@ -1,0 +1,31 @@
+|                                                        |   accuracy |   loss |
+|:-------------------------------------------------------|-----------:|-------:|
+| experiments/cnn_distill_alpha_temp/alpha_0.9_Temp_10   |   0.834256 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.95_Temp_2   |   0.844937 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.99_Temp_2   |   0.843552 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.999_Temp_20 |   0.839992 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.5_Temp_2    |   0.840091 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.3_Temp_30   |   0.837223 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.9_Temp_20   |   0.827828 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.3_Temp_5    |   0.83485  |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.7_Temp_20   |   0.839498 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.7_Temp_10   |   0.840388 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.99_Temp_20  |   0.837421 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.3_Temp_20   |   0.838608 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.7_Temp_5    |   0.84375  |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.5_Temp_30   |   0.834059 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.999_Temp_2  |   0.843552 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.95_Temp_20  |   0.833267 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.9_Temp_5    |   0.838805 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.95_Temp_5   |   0.843651 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.9_Temp_30   |   0.83485  |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.5_Temp_5    |   0.834454 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.7_Temp_2    |   0.834355 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.95_Temp_10  |   0.835245 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.3_Temp_10   |   0.839102 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.9_Temp_2    |   0.837421 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.95_Temp_30  |   0.841377 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.7_Temp_30   |   0.838904 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.5_Temp_10   |   0.83663  |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.3_Temp_2    |   0.837223 |      0 |
+| experiments/cnn_distill_alpha_temp/alpha_0.5_Temp_20   |   0.831784 |      0 |

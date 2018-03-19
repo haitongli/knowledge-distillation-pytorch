@@ -1,0 +1,14 @@
+{
+    "model_version": "cnn_distill",
+    "subset_percent": 1.0,
+    "teacher": "resnet18",
+    "alpha": 0.1,
+    "temperature": 1.5,
+    "learning_rate": 0.001,
+    "batch_size": 128,
+    "num_epochs": 30,
+    "dropout_rate": 0.0,
+    "num_channels": 32,
+    "save_summary_steps": 100,
+    "num_workers": 4
+}

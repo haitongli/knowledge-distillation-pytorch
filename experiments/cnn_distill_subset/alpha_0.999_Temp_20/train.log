@@ -1,0 +1,174 @@
+2018-03-11 06:11:07,091:INFO: Loading the datasets...
+2018-03-11 06:11:10,653:INFO: - done.
+2018-03-11 06:11:13,178:INFO: Starting training for 50 epoch(s)
+2018-03-11 06:11:13,178:INFO: First, loading the teacher model and computing its outputs...
+2018-03-11 06:11:16,600:INFO: - Finished computing teacher outputs after 4 secs..
+2018-03-11 06:11:16,601:INFO: Epoch 1/50
+2018-03-11 06:11:17,221:INFO: - Train metrics: accuracy: 0.125 ; loss: 0.885
+2018-03-11 06:11:18,067:INFO: - Eval metrics : accuracy: 0.131 ; loss: 0.000
+2018-03-11 06:11:18,084:INFO: - Found new best accuracy
+2018-03-11 06:11:18,085:INFO: Epoch 2/50
+2018-03-11 06:11:18,674:INFO: - Train metrics: accuracy: 0.281 ; loss: 0.895
+2018-03-11 06:11:19,516:INFO: - Eval metrics : accuracy: 0.371 ; loss: 0.000
+2018-03-11 06:11:19,553:INFO: - Found new best accuracy
+2018-03-11 06:11:19,554:INFO: Epoch 3/50
+2018-03-11 06:11:20,134:INFO: - Train metrics: accuracy: 0.391 ; loss: 0.924
+2018-03-11 06:11:20,973:INFO: - Eval metrics : accuracy: 0.396 ; loss: 0.000
+2018-03-11 06:11:21,021:INFO: - Found new best accuracy
+2018-03-11 06:11:21,022:INFO: Epoch 4/50
+2018-03-11 06:11:21,601:INFO: - Train metrics: accuracy: 0.461 ; loss: 0.920
+2018-03-11 06:11:22,468:INFO: - Eval metrics : accuracy: 0.460 ; loss: 0.000
+2018-03-11 06:11:22,503:INFO: - Found new best accuracy
+2018-03-11 06:11:22,503:INFO: Epoch 5/50
+2018-03-11 06:11:23,068:INFO: - Train metrics: accuracy: 0.555 ; loss: 0.929
+2018-03-11 06:11:23,930:INFO: - Eval metrics : accuracy: 0.457 ; loss: 0.000
+2018-03-11 06:11:23,948:INFO: Epoch 6/50
+2018-03-11 06:11:24,543:INFO: - Train metrics: accuracy: 0.516 ; loss: 0.925
+2018-03-11 06:11:25,397:INFO: - Eval metrics : accuracy: 0.503 ; loss: 0.000
+2018-03-11 06:11:25,424:INFO: - Found new best accuracy
+2018-03-11 06:11:25,425:INFO: Epoch 7/50
+2018-03-11 06:11:26,010:INFO: - Train metrics: accuracy: 0.617 ; loss: 0.933
+2018-03-11 06:11:26,856:INFO: - Eval metrics : accuracy: 0.525 ; loss: 0.000
+2018-03-11 06:11:26,887:INFO: - Found new best accuracy
+2018-03-11 06:11:26,888:INFO: Epoch 8/50
+2018-03-11 06:11:27,471:INFO: - Train metrics: accuracy: 0.586 ; loss: 0.952
+2018-03-11 06:11:28,320:INFO: - Eval metrics : accuracy: 0.514 ; loss: 0.000
+2018-03-11 06:11:28,336:INFO: Epoch 9/50
+2018-03-11 06:11:28,905:INFO: - Train metrics: accuracy: 0.609 ; loss: 0.949
+2018-03-11 06:11:29,756:INFO: - Eval metrics : accuracy: 0.555 ; loss: 0.000
+2018-03-11 06:11:29,782:INFO: - Found new best accuracy
+2018-03-11 06:11:29,783:INFO: Epoch 10/50
+2018-03-11 06:11:30,360:INFO: - Train metrics: accuracy: 0.617 ; loss: 0.914
+2018-03-11 06:11:31,237:INFO: - Eval metrics : accuracy: 0.535 ; loss: 0.000
+2018-03-11 06:11:31,259:INFO: Epoch 11/50
+2018-03-11 06:11:31,844:INFO: - Train metrics: accuracy: 0.633 ; loss: 0.960
+2018-03-11 06:11:32,683:INFO: - Eval metrics : accuracy: 0.578 ; loss: 0.000
+2018-03-11 06:11:32,711:INFO: - Found new best accuracy
+2018-03-11 06:11:32,712:INFO: Epoch 12/50
+2018-03-11 06:11:33,292:INFO: - Train metrics: accuracy: 0.609 ; loss: 0.909
+2018-03-11 06:11:34,143:INFO: - Eval metrics : accuracy: 0.565 ; loss: 0.000
+2018-03-11 06:11:34,158:INFO: Epoch 13/50
+2018-03-11 06:11:34,743:INFO: - Train metrics: accuracy: 0.633 ; loss: 0.944
+2018-03-11 06:11:35,618:INFO: - Eval metrics : accuracy: 0.581 ; loss: 0.000
+2018-03-11 06:11:35,653:INFO: - Found new best accuracy
+2018-03-11 06:11:35,654:INFO: Epoch 14/50
+2018-03-11 06:11:36,220:INFO: - Train metrics: accuracy: 0.672 ; loss: 0.956
+2018-03-11 06:11:37,076:INFO: - Eval metrics : accuracy: 0.586 ; loss: 0.000
+2018-03-11 06:11:37,103:INFO: - Found new best accuracy
+2018-03-11 06:11:37,104:INFO: Epoch 15/50
+2018-03-11 06:11:37,693:INFO: - Train metrics: accuracy: 0.680 ; loss: 0.952
+2018-03-11 06:11:38,552:INFO: - Eval metrics : accuracy: 0.585 ; loss: 0.000
+2018-03-11 06:11:38,567:INFO: Epoch 16/50
+2018-03-11 06:11:39,149:INFO: - Train metrics: accuracy: 0.609 ; loss: 0.951
+2018-03-11 06:11:39,988:INFO: - Eval metrics : accuracy: 0.601 ; loss: 0.000
+2018-03-11 06:11:40,015:INFO: - Found new best accuracy
+2018-03-11 06:11:40,017:INFO: Epoch 17/50
+2018-03-11 06:11:40,598:INFO: - Train metrics: accuracy: 0.648 ; loss: 0.899
+2018-03-11 06:11:41,451:INFO: - Eval metrics : accuracy: 0.606 ; loss: 0.000
+2018-03-11 06:11:41,483:INFO: - Found new best accuracy
+2018-03-11 06:11:41,484:INFO: Epoch 18/50
+2018-03-11 06:11:42,069:INFO: - Train metrics: accuracy: 0.719 ; loss: 0.972
+2018-03-11 06:11:42,930:INFO: - Eval metrics : accuracy: 0.604 ; loss: 0.000
+2018-03-11 06:11:42,945:INFO: Epoch 19/50
+2018-03-11 06:11:43,533:INFO: - Train metrics: accuracy: 0.734 ; loss: 0.928
+2018-03-11 06:11:44,403:INFO: - Eval metrics : accuracy: 0.607 ; loss: 0.000
+2018-03-11 06:11:44,434:INFO: - Found new best accuracy
+2018-03-11 06:11:44,435:INFO: Epoch 20/50
+2018-03-11 06:11:45,015:INFO: - Train metrics: accuracy: 0.758 ; loss: 0.984
+2018-03-11 06:11:45,883:INFO: - Eval metrics : accuracy: 0.617 ; loss: 0.000
+2018-03-11 06:11:45,910:INFO: - Found new best accuracy
+2018-03-11 06:11:45,911:INFO: Epoch 21/50
+2018-03-11 06:11:46,499:INFO: - Train metrics: accuracy: 0.781 ; loss: 0.933
+2018-03-11 06:11:47,360:INFO: - Eval metrics : accuracy: 0.591 ; loss: 0.000
+2018-03-11 06:11:47,387:INFO: Epoch 22/50
+2018-03-11 06:11:47,976:INFO: - Train metrics: accuracy: 0.766 ; loss: 0.947
+2018-03-11 06:11:48,827:INFO: - Eval metrics : accuracy: 0.621 ; loss: 0.000
+2018-03-11 06:11:48,856:INFO: - Found new best accuracy
+2018-03-11 06:11:48,856:INFO: Epoch 23/50
+2018-03-11 06:11:49,443:INFO: - Train metrics: accuracy: 0.703 ; loss: 0.942
+2018-03-11 06:11:50,301:INFO: - Eval metrics : accuracy: 0.598 ; loss: 0.000
+2018-03-11 06:11:50,338:INFO: Epoch 24/50
+2018-03-11 06:11:50,928:INFO: - Train metrics: accuracy: 0.773 ; loss: 0.962
+2018-03-11 06:11:51,770:INFO: - Eval metrics : accuracy: 0.619 ; loss: 0.000
+2018-03-11 06:11:51,795:INFO: Epoch 25/50
+2018-03-11 06:11:52,386:INFO: - Train metrics: accuracy: 0.781 ; loss: 0.946
+2018-03-11 06:11:53,220:INFO: - Eval metrics : accuracy: 0.646 ; loss: 0.000
+2018-03-11 06:11:53,246:INFO: - Found new best accuracy
+2018-03-11 06:11:53,246:INFO: Epoch 26/50
+2018-03-11 06:11:53,836:INFO: - Train metrics: accuracy: 0.766 ; loss: 0.974
+2018-03-11 06:11:54,692:INFO: - Eval metrics : accuracy: 0.629 ; loss: 0.000
+2018-03-11 06:11:54,715:INFO: Epoch 27/50
+2018-03-11 06:11:55,304:INFO: - Train metrics: accuracy: 0.773 ; loss: 0.955
+2018-03-11 06:11:56,169:INFO: - Eval metrics : accuracy: 0.642 ; loss: 0.000
+2018-03-11 06:11:56,187:INFO: Epoch 28/50
+2018-03-11 06:11:56,771:INFO: - Train metrics: accuracy: 0.797 ; loss: 0.951
+2018-03-11 06:11:57,615:INFO: - Eval metrics : accuracy: 0.620 ; loss: 0.000
+2018-03-11 06:11:57,630:INFO: Epoch 29/50
+2018-03-11 06:11:58,216:INFO: - Train metrics: accuracy: 0.812 ; loss: 0.952
+2018-03-11 06:11:59,044:INFO: - Eval metrics : accuracy: 0.604 ; loss: 0.000
+2018-03-11 06:11:59,063:INFO: Epoch 30/50
+2018-03-11 06:11:59,640:INFO: - Train metrics: accuracy: 0.719 ; loss: 0.953
+2018-03-11 06:12:00,493:INFO: - Eval metrics : accuracy: 0.633 ; loss: 0.000
+2018-03-11 06:12:00,508:INFO: Epoch 31/50
+2018-03-11 06:12:01,116:INFO: - Train metrics: accuracy: 0.836 ; loss: 0.966
+2018-03-11 06:12:01,965:INFO: - Eval metrics : accuracy: 0.631 ; loss: 0.000
+2018-03-11 06:12:01,991:INFO: Epoch 32/50
+2018-03-11 06:12:02,579:INFO: - Train metrics: accuracy: 0.883 ; loss: 0.975
+2018-03-11 06:12:03,435:INFO: - Eval metrics : accuracy: 0.640 ; loss: 0.000
+2018-03-11 06:12:03,450:INFO: Epoch 33/50
+2018-03-11 06:12:04,043:INFO: - Train metrics: accuracy: 0.812 ; loss: 0.932
+2018-03-11 06:12:04,902:INFO: - Eval metrics : accuracy: 0.651 ; loss: 0.000
+2018-03-11 06:12:04,931:INFO: - Found new best accuracy
+2018-03-11 06:12:04,932:INFO: Epoch 34/50
+2018-03-11 06:12:05,500:INFO: - Train metrics: accuracy: 0.852 ; loss: 0.917
+2018-03-11 06:12:06,356:INFO: - Eval metrics : accuracy: 0.631 ; loss: 0.000
+2018-03-11 06:12:06,371:INFO: Epoch 35/50
+2018-03-11 06:12:06,956:INFO: - Train metrics: accuracy: 0.828 ; loss: 0.950
+2018-03-11 06:12:07,807:INFO: - Eval metrics : accuracy: 0.630 ; loss: 0.000
+2018-03-11 06:12:07,822:INFO: Epoch 36/50
+2018-03-11 06:12:08,398:INFO: - Train metrics: accuracy: 0.859 ; loss: 0.953
+2018-03-11 06:12:09,247:INFO: - Eval metrics : accuracy: 0.642 ; loss: 0.000
+2018-03-11 06:12:09,266:INFO: Epoch 37/50
+2018-03-11 06:12:09,841:INFO: - Train metrics: accuracy: 0.852 ; loss: 0.975
+2018-03-11 06:12:10,698:INFO: - Eval metrics : accuracy: 0.636 ; loss: 0.000
+2018-03-11 06:12:10,719:INFO: Epoch 38/50
+2018-03-11 06:12:11,317:INFO: - Train metrics: accuracy: 0.797 ; loss: 0.947
+2018-03-11 06:12:12,163:INFO: - Eval metrics : accuracy: 0.650 ; loss: 0.000
+2018-03-11 06:12:12,179:INFO: Epoch 39/50
+2018-03-11 06:12:12,767:INFO: - Train metrics: accuracy: 0.914 ; loss: 0.954
+2018-03-11 06:12:13,614:INFO: - Eval metrics : accuracy: 0.642 ; loss: 0.000
+2018-03-11 06:12:13,629:INFO: Epoch 40/50
+2018-03-11 06:12:14,220:INFO: - Train metrics: accuracy: 0.836 ; loss: 0.951
+2018-03-11 06:12:15,084:INFO: - Eval metrics : accuracy: 0.656 ; loss: 0.000
+2018-03-11 06:12:15,111:INFO: - Found new best accuracy
+2018-03-11 06:12:15,112:INFO: Epoch 41/50
+2018-03-11 06:12:15,693:INFO: - Train metrics: accuracy: 0.844 ; loss: 0.982
+2018-03-11 06:12:16,559:INFO: - Eval metrics : accuracy: 0.635 ; loss: 0.000
+2018-03-11 06:12:16,575:INFO: Epoch 42/50
+2018-03-11 06:12:17,167:INFO: - Train metrics: accuracy: 0.938 ; loss: 0.969
+2018-03-11 06:12:18,016:INFO: - Eval metrics : accuracy: 0.632 ; loss: 0.000
+2018-03-11 06:12:18,031:INFO: Epoch 43/50
+2018-03-11 06:12:18,616:INFO: - Train metrics: accuracy: 0.875 ; loss: 0.967
+2018-03-11 06:12:19,450:INFO: - Eval metrics : accuracy: 0.657 ; loss: 0.000
+2018-03-11 06:12:19,486:INFO: - Found new best accuracy
+2018-03-11 06:12:19,487:INFO: Epoch 44/50
+2018-03-11 06:12:20,060:INFO: - Train metrics: accuracy: 0.914 ; loss: 0.997
+2018-03-11 06:12:20,904:INFO: - Eval metrics : accuracy: 0.655 ; loss: 0.000
+2018-03-11 06:12:20,919:INFO: Epoch 45/50
+2018-03-11 06:12:21,487:INFO: - Train metrics: accuracy: 0.875 ; loss: 0.999
+2018-03-11 06:12:22,336:INFO: - Eval metrics : accuracy: 0.650 ; loss: 0.000
+2018-03-11 06:12:22,350:INFO: Epoch 46/50
+2018-03-11 06:12:22,935:INFO: - Train metrics: accuracy: 0.953 ; loss: 0.967
+2018-03-11 06:12:23,788:INFO: - Eval metrics : accuracy: 0.656 ; loss: 0.000
+2018-03-11 06:12:23,815:INFO: Epoch 47/50
+2018-03-11 06:12:24,391:INFO: - Train metrics: accuracy: 0.891 ; loss: 0.962
+2018-03-11 06:12:25,250:INFO: - Eval metrics : accuracy: 0.642 ; loss: 0.000
+2018-03-11 06:12:25,265:INFO: Epoch 48/50
+2018-03-11 06:12:25,861:INFO: - Train metrics: accuracy: 0.766 ; loss: 0.985
+2018-03-11 06:12:26,696:INFO: - Eval metrics : accuracy: 0.642 ; loss: 0.000
+2018-03-11 06:12:26,730:INFO: Epoch 49/50
+2018-03-11 06:12:27,294:INFO: - Train metrics: accuracy: 0.898 ; loss: 0.989
+2018-03-11 06:12:28,153:INFO: - Eval metrics : accuracy: 0.641 ; loss: 0.000
+2018-03-11 06:12:28,170:INFO: Epoch 50/50
+2018-03-11 06:12:28,759:INFO: - Train metrics: accuracy: 0.844 ; loss: 0.976
+2018-03-11 06:12:29,623:INFO: - Eval metrics : accuracy: 0.645 ; loss: 0.000

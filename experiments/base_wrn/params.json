@@ -1,0 +1,10 @@
+{
+    "model_version": "wrn",
+    "learning_rate": 1e-1,
+    "batch_size": 128,
+    "num_epochs": 200,
+    "dropout_rate": 0.5, 
+    "num_channels": 32,
+    "save_summary_steps": 100,
+    "num_workers": 4
+}
