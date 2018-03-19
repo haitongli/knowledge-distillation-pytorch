@@ -5,7 +5,7 @@
 
 
 ## Features
-* A framework for exploring knowledge distillation (KD) experiments with flexibility
+* A framework for exploring knowledge distillation (KD) experiments with shallow/deep models
 * Hyperparameters defined by "params.json" universally (avoiding long argparser commands)
 * Easy hyperparameter searching and result synthesizing (as a table)
 * Progress bar, tensorboard support, and checkpoint saving/loading (utils.py)
@@ -24,7 +24,7 @@
 
 
 ## Organizatoin:
-* ./train.py: main entrance for train/eval with or without KD
+* ./train.py: main entrance for train/eval with or without KD on CIFAR-10
 * ./experiments/: json files for each experiment; dir for hypersearch
 * ./model/: pre-defined teacher/student DNNs, dataloader, plus knowledge distillation (KD) loss
 * ./data_analysis/: matplotlib scripts for data analysis on KD 
