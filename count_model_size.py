@@ -8,6 +8,7 @@ import utils
 import model.net as net
 import model.resnet as resnet
 import model.wrn as wrn
+import model.resnext as resnext
 import utils
 
 
@@ -38,6 +39,14 @@ if __name__ == '__main__':
     elif args.model == "wrn":
         model = wrn.wrn(depth=28, num_classes=10, widen_factor=10, dropRate=0.3)
         model_checkpoint = 'experiments/base_wrn/best.pth.tar'
+
+    elif args.model == "distill_resnext":
+        model = resnet.ResNet18()
+        model_checkpoint = 'experiments/resnet18_distill/resnext_teacher/best.pth.tar'
+
+    elif args.model == "distill_densenet":
+        model = resnet.ResNet18()
+        model_checkpoint = 'experiments/resnet18_distill/densenet_teacher/best.pth.tar'
 
     elif args.model == "cnn":
         model = net.Net(params)
