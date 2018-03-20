@@ -11,7 +11,6 @@ import utils
 import model.net as net
 import model.resnet as resnet
 import model.data_loader as data_loader
-from torchnet.meter import ConfusionMeter
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model_dir', default='experiments/base_model', help="Directory of params.json")
