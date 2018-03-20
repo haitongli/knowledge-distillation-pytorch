@@ -141,14 +141,6 @@ class DenseNet(nn.Module):
         return x
 
 
-# def densenet(**kwargs):
-#     """
-#     Constructs a ResNet model.
-#     """
-#     return DenseNet(**kwargs)
-
-
-
 def loss_fn(outputs, labels):
     """
     Compute the cross entropy loss given outputs and labels.

@@ -120,12 +120,6 @@ class CifarResNeXt(nn.Module):
         x = x.view(-1, 1024)
         return self.classifier(x)
 
-# def resnext(**kwargs):
-#     """Constructs a ResNeXt.
-#     """
-#     model = CifarResNeXt(**kwargs)
-#     return model
-
 
 def loss_fn(outputs, labels):
     """

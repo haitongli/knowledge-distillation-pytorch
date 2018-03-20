@@ -3,7 +3,7 @@
     "subset_percent": 1.0,
     "augmentation": "yes",
     "teacher": "none",
-    "alpha": 1.0,
+    "alpha": 0.0,
     "temperature": 1,
     "learning_rate": 1e-1,
     "batch_size": 128,

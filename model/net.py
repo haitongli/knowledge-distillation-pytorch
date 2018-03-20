@@ -1,4 +1,7 @@
-"""Defines the neural network, losss function and metrics"""
+"""
+   Baseline CNN, losss function and metrics
+   Also customizes knowledge distillation (KD) loss function here
+"""
 
 import numpy as np
 import torch
@@ -97,7 +100,7 @@ def loss_fn(outputs, labels):
 def loss_fn_kd(outputs, labels, teacher_outputs, params):
     """
     Compute the knowledge-distillation (KD) loss given outputs, labels.
-
+    "Hyperparameters": temperature and alpha
     """
     alpha = params.alpha
     T = params.temperature

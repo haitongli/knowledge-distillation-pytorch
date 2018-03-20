@@ -1,14 +1,15 @@
-#produced images
-*.png
-*.tiff
+#data_analysis
+data_analysis/
 
-#Dataset and large files
+#Dataset and model checkpoint files
 *.tar.gz
 *.pth.tar
 *.tar
+*.zip
 data-cifar10/
+data_mnist/
 
-#log files (may or may not want to keep them, depending on whether need to use aws)
+#log files (may or may not want to keep them, depending on whether need to use Cloud service)
 #*.log
 board_logs/
 *events.out.tfevents*

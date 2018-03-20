@@ -1,4 +1,4 @@
-"""Train the model"""
+"""Main entrance for train/eval with/without KD on CIFAR-10"""
 
 import argparse
 import logging
@@ -106,7 +106,7 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
         model: (torch.nn.Module) the neural network
         params: (Params) hyperparameters
         model_dir: (string) directory containing config, weights and log
-        restore_file: (string) optional- name of file to restore from (without its extension .pth.tar)
+        restore_file: (string) - name of file to restore from (without its extension .pth.tar)
     """
     # reload weights from restore_file if specified
     if restore_file is not None:
@@ -119,8 +119,7 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
     # learning rate schedulers for different models:
     if params.model_version == "resnet18":
         scheduler = StepLR(optimizer, step_size=150, gamma=0.1)
-    elif params.model_version == "wrn":
-        scheduler = StepLR(optimizer, step_size=60, gamma=0.2)
+    # for cnn models, num_epoch is always < 100, so it's intentionally not using scheduler here
     elif params.model_version == "cnn":
         scheduler = StepLR(optimizer, step_size=100, gamma=0.2)
 
@@ -160,13 +159,8 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
         last_json_path = os.path.join(model_dir, "metrics_val_last_weights.json")
         utils.save_dict_to_json(val_metrics, last_json_path)
 
-        # if epoch == params.num_epochs - 1:
-        #     train_metrics = evaluate(model, loss_fn, train_dataloader, metrics, params)
-        #     last_json_path = os.path.join(model_dir, "metrics_train_last_weights.json")
-        #     utils.save_dict_to_json(train_metrics, last_json_path)
 
-
-# Helper: get [batch_idx, teacher_outputs] list by running teacher model once
+# Helper function: get [batch_idx, teacher_outputs] list by running teacher model once
 def fetch_teacher_outputs(teacher_model, dataloader, params):
     # set teacher_model to evaluation mode
     teacher_model.eval()
@@ -182,8 +176,8 @@ def fetch_teacher_outputs(teacher_model, dataloader, params):
 
     return teacher_outputs
 
-# Defining train_kd & train_and_evaluate_kd functions
 
+# Defining train_kd & train_and_evaluate_kd functions
 def train_kd(model, teacher_outputs, optimizer, loss_fn_kd, dataloader, metrics, params):
     """Train the model on `num_steps` batches
 
@@ -264,7 +258,7 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         model: (torch.nn.Module) the neural network
         params: (Params) hyperparameters
         model_dir: (string) directory containing config, weights and log
-        restore_file: (string) optional- file to restore (without its extension .pth.tar)
+        restore_file: (string) - file to restore (without its extension .pth.tar)
     """
     # reload weights from restore_file if specified
     if restore_file is not None:
@@ -274,10 +268,10 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
 
     best_val_acc = 0.0
     
-    #Tensorboard logger setup
+    # Tensorboard logger setup
     # board_logger = utils.Board_Logger(os.path.join(model_dir, 'board_logs'))
 
-    # Compute teacher outputs using teacher_model under eval() mode
+    # fetch teacher outputs using teacher_model under eval() mode
     loading_start = time.time()
     teacher_model.eval()
     teacher_outputs = fetch_teacher_outputs(teacher_model, train_dataloader, params)
@@ -287,8 +281,9 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
     # learning rate schedulers for different models:
     if params.model_version == "resnet18_distill":
         scheduler = StepLR(optimizer, step_size=150, gamma=0.1)
-    elif params.model_version == "cnn_distill":
-        scheduler = StepLR(optimizer, step_size=100, gamma=0.2)
+    # for cnn models, num_epoch is always < 100, so it's intentionally not using scheduler here
+    elif params.model_version == "cnn_distill": 
+        scheduler = StepLR(optimizer, step_size=100, gamma=0.2) 
 
     for epoch in range(params.num_epochs):
 
@@ -328,7 +323,7 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         utils.save_dict_to_json(val_metrics, last_json_path)
 
 
-        # #============ TensorBoard logging ============#
+        # #============ TensorBoard logging: uncomment below to turn in on ============#
         # # (1) Log the scalar values
         # info = {
         #     'val accuracy': val_acc
@@ -342,11 +337,6 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         #     tag = tag.replace('.', '/')
         #     board_logger.histo_summary(tag, value.data.cpu().numpy(), epoch+1)
         #     # board_logger.histo_summary(tag+'/grad', value.grad.data.cpu().numpy(), epoch+1)
-
-        # if epoch == params.num_epochs - 1:
-        #     train_metrics = evaluate_kd(model, train_dataloader, metrics, params)
-        #     last_json_path = os.path.join(model_dir, "metrics_train_last_weights.json")
-        #     utils.save_dict_to_json(train_metrics, last_json_path)
 
 
 if __name__ == '__main__':
@@ -387,9 +377,11 @@ if __name__ == '__main__':
     """
     if "distill" in params.model_version:
 
+        # train a 5-layer CNN or a 18-layer ResNet with knowledge distillation
         if params.model_version == "cnn_distill":
             model = net.Net(params).cuda() if params.cuda else net.Net(params)
             optimizer = optim.Adam(model.parameters(), lr=params.learning_rate)
+            # fetch loss function and metrics definition in model files
             loss_fn_kd = net.loss_fn_kd
             metrics = net.metrics
         
@@ -397,11 +389,16 @@ if __name__ == '__main__':
             model = resnet.ResNet18().cuda() if params.cuda else resnet.ResNet18()
             optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
                                   momentum=0.9, weight_decay=5e-4)
-            # fetch loss function and metrics
+            # fetch loss function and metrics definition in model files
             loss_fn_kd = net.loss_fn_kd
             metrics = resnet.metrics
 
-        # use resnet/wrn/densenet for knowledge distillation during training
+        """ 
+            Specify the pre-trained teacher models for knowledge distillation
+            Important note: wrn/densenet/resnext/preresnet were pre-trained models using multi-GPU,
+            therefore need to call "nn.DaraParallel" to correctly load the model weights
+            Trying to run on CPU will then trigger errors (too time-consuming anyway)!
+        """
         if params.teacher == "resnet18":
             teacher_model = resnet.ResNet18()
             teacher_checkpoint = 'experiments/base_resnet18/best.pth.tar'
@@ -437,7 +434,7 @@ if __name__ == '__main__':
         train_and_evaluate_kd(model, teacher_model, train_dl, dev_dl, optimizer, loss_fn_kd,
                               metrics, params, args.model_dir, args.restore_file)
 
-    # non-KD mode: regular training (with CrossEntropy) 
+    # non-KD mode: regular training of the baseline CNN or ResNet-18
     else:
         if params.model_version == "cnn":
             model = net.Net(params).cuda() if params.cuda else net.Net(params)
@@ -446,15 +443,6 @@ if __name__ == '__main__':
             loss_fn = net.loss_fn
             metrics = net.metrics
 
-        elif params.model_version == "wrn":
-            model = wrn.wrn(depth=28, num_classes=10, widen_factor=10, dropRate=0.3)
-            model = model.cuda() if params.cuda else model
-            optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
-                                  momentum=0.9, weight_decay=5e-4)
-            # fetch loss function and metrics
-            loss_fn = wrn.loss_fn
-            metrics = wrn.metrics
-
         elif params.model_version == "resnet18":
             model = resnet.ResNet18().cuda() if params.cuda else resnet.ResNet18()
             optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
@@ -462,6 +450,15 @@ if __name__ == '__main__':
             # fetch loss function and metrics
             loss_fn = resnet.loss_fn
             metrics = resnet.metrics
+
+        # elif params.model_version == "wrn":
+        #     model = wrn.wrn(depth=28, num_classes=10, widen_factor=10, dropRate=0.3)
+        #     model = model.cuda() if params.cuda else model
+        #     optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
+        #                           momentum=0.9, weight_decay=5e-4)
+        #     # fetch loss function and metrics
+        #     loss_fn = wrn.loss_fn
+        #     metrics = wrn.metrics
 
         # Train the model
         logging.info("Starting training for {} epoch(s)".format(params.num_epochs))

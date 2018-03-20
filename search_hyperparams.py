@@ -1,4 +1,24 @@
-"""Peform hyperparemeters search"""
+"""
+   Peform hyperparemeters search
+
+   A brief definition/clarification of 'params.json' files:
+
+   "model_version": "resnet18", # "base" models or "modelname"_distill models
+   "subset_percent": 1.0,       # use full (1.0) train set or partial (<1.0) train set
+   "augmentation": "yes",       # whether to use data augmentation in data_loader
+   "teacher": "densenet",       # no need to specify this for "base" cnn/resnet18
+   "alpha": 0.0,                # only used for experiments involving distillation
+   "temperature": 1,            # only used for experiments involving distillation
+   "learning_rate": 1e-1,       # as the name suggests
+   "batch_size": 128,           # for both train/eval
+   "num_epochs": 200,           # as the name suggests
+   "dropout_rate": 0.5,         # only valid for "cnn"-related models, not in resnet18
+   "num_channels": 32,          # only valid for "cnn"-related models, not in resnet18
+   "save_summary_steps": 100,
+   "num_workers": 4
+
+"""
+
 
 import argparse
 import os
@@ -47,30 +67,13 @@ if __name__ == "__main__":
     # Set the logger
     utils.set_logger(os.path.join(args.parent_dir, 'search_hyperparameters.log'))
 
-
-    # # Perform hypersearch over one parameter
-    # learning_rates = [1e-4, 1e-3, 1e-2]
-
-    # for learning_rate in learning_rates:
-    #     # [Modify] the relevant parameter in params (others remain unchanged)
-    #     params.learning_rate = learning_rate
-
-    #     # Launch job (name has to be unique)
-    #     job_name = "learning_rate_{}".format(learning_rate)
-    #     launch_training_job(args.parent_dir, job_name, params)
-
     '''
-    Temperature and alpha search for KD on CNN
-    Perform hypersearch (grid): KD temperature, alpha
+    Temperature and alpha search for KD on CNN (teacher model picked in params.json)
+    Perform hypersearch (empirical grid): distilling 'temperature', loss weight 'alpha'
     '''
-    
-    # # hyperparameters used for subset experiments:
-    # alphas = [0.999, 0.95, 0.5, 0.1, 0.01]
-    # temperatures = [40, 20, 10, 8, 6, 4.5, 3, 2, 1]
 
-    # hyperparameters used for cnn-distill-nodropout/noaugment experiments:
-    # alphas = [0.99, 0.95, 0.5, 0.1, 0.05]
-    alphas = [0.1, 0.05]
+    # hyperparameters for KD
+    alphas = [0.99, 0.95, 0.5, 0.1, 0.05]
     temperatures = [20., 10., 8., 6., 4.5, 3., 2., 1.5]
 
     logging.info("Searching hyperparameters...")

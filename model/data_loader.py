@@ -1,3 +1,8 @@
+"""
+   CIFAR-10 data normalization reference:
+   https://github.com/Armour/pytorch-nn-practice/blob/master/utils/meanstd.py
+"""
+
 import random
 import os
 import numpy as np
@@ -9,26 +14,24 @@ from torch.utils.data.sampler import SubsetRandomSampler
 
 def fetch_dataloader(types, params):
     """
-    Fetch and return train/dev dataloader with hyperparameters
+    Fetch and return train/dev dataloader with hyperparameters (params.subset_percent = 1.)
     """
 
-    #data transformers on train and dev('test') sets
+    # using random crops and horizontal flip for train set
     if params.augmentation == "yes":
         train_transformer = transforms.Compose([
             transforms.RandomCrop(32, padding=4),
             transforms.RandomHorizontalFlip(),  # randomly flip image horizontally
             transforms.ToTensor(),
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))])
-            # normalization values:
-            # https://github.com/Armour/pytorch-nn-practice/blob/master/utils/meanstd.py
+
+    # data augmentation can be turned off
     else:
         train_transformer = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))])
-            # normalization values:
-            # https://github.com/Armour/pytorch-nn-practice/blob/master/utils/meanstd.py
 
-    # loader for development, no horizontal flip
+    # transformer for dev set
     dev_transformer = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))])
@@ -38,9 +41,9 @@ def fetch_dataloader(types, params):
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=params.batch_size,
         shuffle=True, num_workers=params.num_workers, pin_memory=params.cuda)
 
-    testset = torchvision.datasets.CIFAR10(root='./data-cifar10', train=False,
+    devset = torchvision.datasets.CIFAR10(root='./data-cifar10', train=False,
         download=True, transform=dev_transformer)
-    devloader = torch.utils.data.DataLoader(testset, batch_size=params.batch_size,
+    devloader = torch.utils.data.DataLoader(devset, batch_size=params.batch_size,
         shuffle=False, num_workers=params.num_workers, pin_memory=params.cuda)
 
     if types == 'train':
@@ -53,25 +56,24 @@ def fetch_dataloader(types, params):
 
 def fetch_subset_dataloader(types, params):
     """
-    Use only a subset of dataset for KD
+    Use only a subset of dataset for KD training, depending on params.subset_percent
     """
-    #data transformers on train and dev('test') sets
+
+    # using random crops and horizontal flip for train set
     if params.augmentation == "yes":
         train_transformer = transforms.Compose([
             transforms.RandomCrop(32, padding=4),
             transforms.RandomHorizontalFlip(),  # randomly flip image horizontally
             transforms.ToTensor(),
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))])
-            # normalization values:
-            # https://github.com/Armour/pytorch-nn-practice/blob/master/utils/meanstd.py
+
+    # data augmentation can be turned off
     else:
         train_transformer = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))])
-            # normalization values:
-            # https://github.com/Armour/pytorch-nn-practice/blob/master/utils/meanstd.py
 
-    # loader for development, no horizontal flip
+    # transformer for dev set
     dev_transformer = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))])
@@ -79,7 +81,7 @@ def fetch_subset_dataloader(types, params):
     trainset = torchvision.datasets.CIFAR10(root='./data-cifar10', train=True,
         download=True, transform=train_transformer)
 
-    testset = torchvision.datasets.CIFAR10(root='./data-cifar10', train=False,
+    devset = torchvision.datasets.CIFAR10(root='./data-cifar10', train=False,
         download=True, transform=dev_transformer)
 
     trainset_size = len(trainset)
@@ -93,7 +95,7 @@ def fetch_subset_dataloader(types, params):
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=params.batch_size,
         sampler=train_sampler, num_workers=params.num_workers, pin_memory=params.cuda)
 
-    devloader = torch.utils.data.DataLoader(testset, batch_size=params.batch_size,
+    devloader = torch.utils.data.DataLoader(devset, batch_size=params.batch_size,
         shuffle=False, num_workers=params.num_workers, pin_memory=params.cuda)
 
     if types == 'train':

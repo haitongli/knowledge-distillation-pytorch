@@ -67,6 +67,11 @@ def evaluate(model, loss_fn, dataloader, metrics, params):
     return metrics_mean
 
 
+"""
+This function duplicates "evaluate()" but ignores "loss_fn" simply for speedup purpose.
+Validation loss during KD mode would display '0' all the time.
+One can bring that info back by using the fetched teacher outputs during evaluation (refer to train.py)
+"""
 def evaluate_kd(model, dataloader, metrics, params):
     """Evaluate the model on `num_steps` batches.
 
@@ -118,49 +123,49 @@ def evaluate_kd(model, dataloader, metrics, params):
     return metrics_mean
 
 
-if __name__ == '__main__':
-    """
-        Evaluate the model on the test set.
-    """
-    # Load the parameters
-    args = parser.parse_args()
-    json_path = os.path.join(args.model_dir, 'params.json')
-    assert os.path.isfile(json_path), "No json configuration file found at {}".format(json_path)
-    params = utils.Params(json_path)
+# if __name__ == '__main__':
+#     """
+#         Evaluate the model on a dataset for one pass.
+#     """
+#     # Load the parameters
+#     args = parser.parse_args()
+#     json_path = os.path.join(args.model_dir, 'params.json')
+#     assert os.path.isfile(json_path), "No json configuration file found at {}".format(json_path)
+#     params = utils.Params(json_path)
 
-    # use GPU if available
-    params.cuda = torch.cuda.is_available()     # use GPU is available
+#     # use GPU if available
+#     params.cuda = torch.cuda.is_available()     # use GPU is available
 
-    # Set the random seed for reproducible experiments
-    torch.manual_seed(230)
-    if params.cuda: torch.cuda.manual_seed(230)
+#     # Set the random seed for reproducible experiments
+#     torch.manual_seed(230)
+#     if params.cuda: torch.cuda.manual_seed(230)
         
-    # Get the logger
-    utils.set_logger(os.path.join(args.model_dir, 'evaluate.log'))
+#     # Get the logger
+#     utils.set_logger(os.path.join(args.model_dir, 'evaluate.log'))
 
-    # Create the input data pipeline
-    logging.info("Loading the dataset...")
+#     # Create the input data pipeline
+#     logging.info("Loading the dataset...")
 
-    # fetch dataloaders
-    # train_dl = data_loader.fetch_dataloader('train', params)
-    dev_dl = data_loader.fetch_dataloader('dev', params)
+#     # fetch dataloaders
+#     # train_dl = data_loader.fetch_dataloader('train', params)
+#     dev_dl = data_loader.fetch_dataloader('dev', params)
 
-    logging.info("- done.")
+#     logging.info("- done.")
 
-    # Define the model graph
-    model = resnet.ResNet18().cuda() if params.cuda else resnet.ResNet18()
-    optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
-                          momentum=0.9, weight_decay=5e-4)
-    # fetch loss function and metrics
-    loss_fn_kd = net.loss_fn_kd
-    metrics = resnet.metrics
+#     # Define the model graph
+#     model = resnet.ResNet18().cuda() if params.cuda else resnet.ResNet18()
+#     optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
+#                           momentum=0.9, weight_decay=5e-4)
+#     # fetch loss function and metrics
+#     loss_fn_kd = net.loss_fn_kd
+#     metrics = resnet.metrics
     
-    logging.info("Starting evaluation...")
+#     logging.info("Starting evaluation...")
 
-    # Reload weights from the saved file
-    utils.load_checkpoint(os.path.join(args.model_dir, args.restore_file + '.pth.tar'), model)
+#     # Reload weights from the saved file
+#     utils.load_checkpoint(os.path.join(args.model_dir, args.restore_file + '.pth.tar'), model)
 
-    # Evaluate
-    test_metrics = evaluate(model, loss_fn, dev_dl, metrics, params)
-    save_path = os.path.join(args.model_dir, "metrics_test_{}.json".format(args.restore_file))
-    utils.save_dict_to_json(test_metrics, save_path)
+#     # Evaluate
+#     test_metrics = evaluate_kd(model, dev_dl, metrics, params)
+#     save_path = os.path.join(args.model_dir, "metrics_test_{}.json".format(args.restore_file))
+#     utils.save_dict_to_json(test_metrics, save_path)

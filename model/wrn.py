@@ -86,13 +86,6 @@ class WideResNet(nn.Module):
         out = out.view(-1, self.nChannels)
         return self.fc(out)
 
-# def wrn(**kwargs):
-#     """
-#     Constructs a Wide Residual Networks.
-#     """
-#     model = WideResNet(**kwargs)
-#     return model
-
 
 def loss_fn(outputs, labels):
     """

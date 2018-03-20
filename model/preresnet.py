@@ -152,12 +152,6 @@ class PreResNet(nn.Module):
         return x
 
 
-# def preresnet(**kwargs):
-#     """
-#     Constructs a ResNet model.
-#     """
-#     return PreResNet(**kwargs)
-
 def loss_fn(outputs, labels):
     """
     Compute the cross entropy loss given outputs and labels.

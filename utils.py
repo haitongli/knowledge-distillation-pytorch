@@ -1,9 +1,9 @@
 """
 Tensorboard logger code referenced from:
 https://github.com/yunjey/pytorch-tutorial/blob/master/tutorials/04-utils/
-Other utils: Stanford CS230 github
+Other helper functions:
+https://github.com/cs230-stanford/cs230-stanford.github.io
 """
-
 
 import json
 import logging
@@ -152,8 +152,9 @@ def load_checkpoint(checkpoint, model, optimizer=None):
     if torch.cuda.is_available():
         checkpoint = torch.load(checkpoint)
     else:
+        # this helps avoid errors when loading single-GPU-trained weights onto CPU-model
         checkpoint = torch.load(checkpoint, map_location=lambda storage, loc: storage)
-    # checkpoint = torch.load(checkpoint, map_location=lambda storage, loc: storage)
+
     model.load_state_dict(checkpoint['state_dict'])
 
     if optimizer:
