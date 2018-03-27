@@ -65,11 +65,32 @@ python synthesize_results.py --parent_dir experiments/cnn_distill_alpha_temp
 ```
 
 
-## Results
+## Results: "Shallow" and "Deep" Distillation
+
 Quick takeaways (more details to be added):
 
 * Knowledge distillation provides regularization for both shallow DNNs and state-of-the-art DNNs
-* KD can also help in the scenarios of using unlabeled dataset and small amount of data for training
+* Having unlabeled or partial dataset can benefit from dark knowledge of teacher models
+
+
+###-Knowledge distillation from ResNet-18 to 5-layer CNN
+
+| Model                   | Dropout = 0.5      |  No Dropout        | 
+| :------------------:    | :----------------: | :-----------------:|
+| 5-layer CNN             | 83.51%             |  84.74%            | 
+| 5-layer CNN w/ ResNet18 | 84.49%             |  **85.69%**        |
+
+###-Knowledge distillation from deeper models to ResNet-18
+
+|Model                      |  Test Accuracy|
+|:--------:                 |   :---------:|
+Baseline ResNet-18         | 94.175%
++ KD WideResNet-28-10      | 94.333%
++ KD PreResNet-110         | 94.531%
++ KD DenseNet-100          | 94.729%
++ KD ResNext-29-8          | **94.788%**
+
+
 
 ## References
 
