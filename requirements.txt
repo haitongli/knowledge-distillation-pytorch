@@ -6,3 +6,4 @@ tensorflow==1.7.0rc0
 torch==0.3.0.post4
 torchvision==0.2.0
 tqdm==4.19.8
+torchnet

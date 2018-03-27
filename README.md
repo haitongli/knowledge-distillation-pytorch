@@ -73,14 +73,14 @@ Quick takeaways (more details to be added):
 * Having unlabeled or partial dataset can benefit from dark knowledge of teacher models
 
 
-###-Knowledge distillation from ResNet-18 to 5-layer CNN
+###Knowledge distillation from ResNet-18 to 5-layer CNN
 
 | Model                   | Dropout = 0.5      |  No Dropout        | 
 | :------------------:    | :----------------: | :-----------------:|
 | 5-layer CNN             | 83.51%             |  84.74%            | 
 | 5-layer CNN w/ ResNet18 | 84.49%             |  **85.69%**        |
 
-###-Knowledge distillation from deeper models to ResNet-18
+###Knowledge distillation from deeper models to ResNet-18
 
 |Model                      |  Test Accuracy|
 |:--------:                 |   :---------:|
