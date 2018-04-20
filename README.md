@@ -95,6 +95,8 @@ Quick takeaways (more details to be added):
 
 ## References
 
+H. Li, "Exploring knowledge distillation of Deep neural nets for efficient hardware solutions," [CS230 Report](http://cs230.stanford.edu/files_winter_2018/projects/6940224.pdf), 2018
+
 Hinton, Geoffrey, Oriol Vinyals, and Jeff Dean. "Distilling the knowledge in a neural network." arXiv preprint arXiv:1503.02531 (2015).
 
 Romero, A., Ballas, N., Kahou, S. E., Chassang, A., Gatta, C., & Bengio, Y. (2014). Fitnets: Hints for thin deep nets. arXiv preprint arXiv:1412.6550.
