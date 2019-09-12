@@ -36,7 +36,6 @@ parser.add_argument('--restore_file', default=None,
 
 def train(model, optimizer, loss_fn, dataloader, metrics, params):
     """Train the model on `num_steps` batches
-
     Args:
         model: (torch.nn.Module) the neural network
         optimizer: (torch.optim) optimizer for parameters of model
@@ -58,8 +57,8 @@ def train(model, optimizer, loss_fn, dataloader, metrics, params):
         for i, (train_batch, labels_batch) in enumerate(dataloader):
             # move to GPU if available
             if params.cuda:
-                train_batch, labels_batch = train_batch.cuda(), \
-                                            labels_batch.cuda()
+                train_batch, labels_batch = train_batch.cuda(async=True), \
+                                            labels_batch.cuda(async=True)
             # convert to torch Variables
             train_batch, labels_batch = Variable(train_batch), Variable(labels_batch)
 
@@ -83,11 +82,11 @@ def train(model, optimizer, loss_fn, dataloader, metrics, params):
                 # compute all metrics on this batch
                 summary_batch = {metric:metrics[metric](output_batch, labels_batch)
                                  for metric in metrics}
-                summary_batch['loss'] = loss.data.item()
+                summary_batch['loss'] = loss.data[0]
                 summ.append(summary_batch)
 
             # update the average loss
-            loss_avg.update(loss.data.item())
+            loss_avg.update(loss.data[0])
 
             t.set_postfix(loss='{:05.3f}'.format(loss_avg()))
             t.update()
@@ -101,7 +100,6 @@ def train(model, optimizer, loss_fn, dataloader, metrics, params):
 def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
                        loss_fn, metrics, params, model_dir, restore_file=None):
     """Train the model and evaluate every epoch.
-
     Args:
         model: (torch.nn.Module) the neural network
         params: (Params) hyperparameters
@@ -159,10 +157,10 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
         last_json_path = os.path.join(model_dir, "metrics_val_last_weights.json")
         utils.save_dict_to_json(val_metrics, last_json_path)
 
+
 # Defining train_kd & train_and_evaluate_kd functions
 def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, params):
     """Train the model on `num_steps` batches
-
     Args:
         model: (torch.nn.Module) the neural network
         optimizer: (torch.optim) optimizer for parameters of model
@@ -171,10 +169,10 @@ def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, p
         metrics: (dict) 
         params: (Params) hyperparameters
     """
-    teacher_model.eval()
+
     # set model to training mode
     model.train()
-    # teacher_model.eval()
+    teacher_model.eval()
 
     # summary for current training loop and a running average object for loss
     summ = []
@@ -185,22 +183,20 @@ def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, p
         for i, (train_batch, labels_batch) in enumerate(dataloader):
             # move to GPU if available
             if params.cuda:
-                train_batch, labels_batch = train_batch.cuda(), \
-                                            labels_batch.cuda()
+                train_batch, labels_batch = train_batch.cuda(async=True), \
+                                            labels_batch.cuda(async=True)
             # convert to torch Variables
             train_batch, labels_batch = Variable(train_batch), Variable(labels_batch)
 
             # compute model output, fetch teacher output, and compute KD loss
             output_batch = model(train_batch)
 
+            # get one batch output from teacher_outputs list
             with torch.no_grad():
                 output_teacher_batch = teacher_model(train_batch)
-
-            # get one batch output from teacher_outputs list
-            # output_teacher_batch = torch.from_numpy(teacher_outputs[i])
-            # if params.cuda:
-            #     output_teacher_batch = output_teacher_batch.cuda()
-            # output_teacher_batch = Variable(output_teacher_batch, requires_grad=False)
+            if params.cuda:
+                output_teacher_batch = output_teacher_batch.cuda(async=True)
+            output_teacher_batch = Variable(output_teacher_batch, requires_grad=False)
 
             loss = loss_fn_kd(output_batch, labels_batch, output_teacher_batch, params)
 
@@ -220,12 +216,11 @@ def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, p
                 # compute all metrics on this batch
                 summary_batch = {metric:metrics[metric](output_batch, labels_batch)
                                  for metric in metrics}
-                # summary_batch['loss'] = loss.data[0]
-                summary_batch['loss'] = loss.data.item()
+                summary_batch['loss'] = loss.data[0]
                 summ.append(summary_batch)
 
             # update the average loss
-            loss_avg.update(loss.data.item())
+            loss_avg.update(loss.data[0])
 
             t.set_postfix(loss='{:05.3f}'.format(loss_avg()))
             t.update()
@@ -239,7 +234,6 @@ def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, p
 def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader, optimizer,
                        loss_fn_kd, metrics, params, model_dir, restore_file=None):
     """Train the model and evaluate every epoch.
-
     Args:
         model: (torch.nn.Module) the neural network
         params: (Params) hyperparameters
@@ -256,13 +250,6 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
     
     # Tensorboard logger setup
     # board_logger = utils.Board_Logger(os.path.join(model_dir, 'board_logs'))
-
-    # fetch teacher outputs using teacher_model under eval() mode
-    # loading_start = time.time()
-    # # teacher_model.eval()
-    # # teacher_outputs = fetch_teacher_outputs(teacher_model, train_dataloader, params)
-    # elapsed_time = math.ceil(time.time() - loading_start)
-    # logging.info("- Finished computing teacher outputs after {} secs..".format(elapsed_time))
 
     # learning rate schedulers for different models:
     if params.model_version == "resnet18_distill":
@@ -332,7 +319,7 @@ if __name__ == '__main__':
     json_path = os.path.join(args.model_dir, 'params.json')
     assert os.path.isfile(json_path), "No json configuration file found at {}".format(json_path)
     params = utils.Params(json_path)
-    params.num_epochs = 100
+
     # use GPU if available
     params.cuda = torch.cuda.is_available()
 
