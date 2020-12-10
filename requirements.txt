@@ -2,7 +2,7 @@ scipy==1.0.0
 numpy==1.14.0
 Pillow==5.0.0
 tabulate==0.8.2
-tensorflow==1.7.0rc0
+tensorflow==2.4.0rc4
 torch==0.3.0.post4
 torchvision==0.2.0
 tqdm==4.19.8
