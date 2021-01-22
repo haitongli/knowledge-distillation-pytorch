@@ -160,25 +160,8 @@ def train_and_evaluate(model, train_dataloader, val_dataloader, optimizer,
         utils.save_dict_to_json(val_metrics, last_json_path)
 
 
-# Helper function: get [batch_idx, teacher_outputs] list by running teacher model once
-def fetch_teacher_outputs(teacher_model, dataloader, params):
-    # set teacher_model to evaluation mode
-    teacher_model.eval()
-    teacher_outputs = []
-    for i, (data_batch, labels_batch) in enumerate(dataloader):
-        if params.cuda:
-            data_batch, labels_batch = data_batch.cuda(async=True), \
-                                        labels_batch.cuda(async=True)
-        data_batch, labels_batch = Variable(data_batch), Variable(labels_batch)
-
-        output_teacher_batch = teacher_model(data_batch).data.cpu().numpy()
-        teacher_outputs.append(output_teacher_batch)
-
-    return teacher_outputs
-
-
 # Defining train_kd & train_and_evaluate_kd functions
-def train_kd(model, teacher_outputs, optimizer, loss_fn_kd, dataloader, metrics, params):
+def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, params):
     """Train the model on `num_steps` batches
 
     Args:
@@ -192,7 +175,7 @@ def train_kd(model, teacher_outputs, optimizer, loss_fn_kd, dataloader, metrics,
 
     # set model to training mode
     model.train()
-    # teacher_model.eval()
+    teacher_model.eval()
 
     # summary for current training loop and a running average object for loss
     summ = []
@@ -212,10 +195,11 @@ def train_kd(model, teacher_outputs, optimizer, loss_fn_kd, dataloader, metrics,
             output_batch = model(train_batch)
 
             # get one batch output from teacher_outputs list
-            output_teacher_batch = torch.from_numpy(teacher_outputs[i])
+
+            with torch.no_grad():
+                output_teacher_batch = teacher_model(train_batch)
             if params.cuda:
                 output_teacher_batch = output_teacher_batch.cuda(async=True)
-            output_teacher_batch = Variable(output_teacher_batch, requires_grad=False)
 
             loss = loss_fn_kd(output_batch, labels_batch, output_teacher_batch, params)
 
@@ -271,13 +255,6 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
     # Tensorboard logger setup
     # board_logger = utils.Board_Logger(os.path.join(model_dir, 'board_logs'))
 
-    # fetch teacher outputs using teacher_model under eval() mode
-    loading_start = time.time()
-    teacher_model.eval()
-    teacher_outputs = fetch_teacher_outputs(teacher_model, train_dataloader, params)
-    elapsed_time = math.ceil(time.time() - loading_start)
-    logging.info("- Finished computing teacher outputs after {} secs..".format(elapsed_time))
-
     # learning rate schedulers for different models:
     if params.model_version == "resnet18_distill":
         scheduler = StepLR(optimizer, step_size=150, gamma=0.1)
@@ -293,7 +270,7 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         logging.info("Epoch {}/{}".format(epoch + 1, params.num_epochs))
 
         # compute number of batches in one epoch (one full pass over the training set)
-        train_kd(model, teacher_outputs, optimizer, loss_fn_kd, train_dataloader,
+        train_kd(model, teacher_model, optimizer, loss_fn_kd, train_dataloader,
                  metrics, params)
 
         # Evaluate for one epoch on validation set
