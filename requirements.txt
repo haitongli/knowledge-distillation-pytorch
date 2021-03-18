@@ -1,6 +1,6 @@
 scipy==1.0.0
 numpy==1.14.0
-Pillow==5.0.0
+Pillow==8.1.1
 tabulate==0.8.2
 tensorflow==1.7.0rc0
 torch==0.3.0.post4
