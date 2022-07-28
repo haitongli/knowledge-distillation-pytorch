@@ -8,3 +8,200 @@
 2018-03-09 20:54:24,364:INFO: - done.
 2018-03-09 20:54:24,368:INFO: Starting training for 30 epoch(s)
 2018-03-09 20:54:24,368:INFO: Epoch 1/30
+2022-07-28 11:50:31,963:INFO: Loading the datasets...
+2022-07-28 11:50:52,221:INFO: - done.
+2022-07-28 11:50:53,443:INFO: Starting training for 30 epoch(s)
+2022-07-28 11:50:53,444:INFO: Epoch 1/30
+2022-07-28 13:01:28,711:INFO: Loading the datasets...
+2022-07-28 13:01:30,730:INFO: - done.
+2022-07-28 13:01:31,954:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:01:31,955:INFO: Epoch 1/30
+2022-07-28 13:12:25,615:INFO: Loading the datasets...
+2022-07-28 13:12:27,620:INFO: - done.
+2022-07-28 13:12:28,840:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:12:28,840:INFO: Epoch 1/30
+2022-07-28 13:14:33,999:INFO: Loading the datasets...
+2022-07-28 13:14:36,017:INFO: - done.
+2022-07-28 13:14:37,237:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:14:37,238:INFO: Epoch 1/30
+2022-07-28 13:14:47,287:INFO: Loading the datasets...
+2022-07-28 13:14:49,293:INFO: - done.
+2022-07-28 13:14:50,512:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:14:50,512:INFO: Epoch 1/30
+2022-07-28 13:15:45,023:INFO: Loading the datasets...
+2022-07-28 13:15:47,029:INFO: - done.
+2022-07-28 13:15:48,250:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:15:48,250:INFO: Epoch 1/30
+2022-07-28 13:23:28,075:INFO: Loading the datasets...
+2022-07-28 13:23:30,078:INFO: - done.
+2022-07-28 13:23:31,296:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:23:31,296:INFO: Epoch 1/30
+2022-07-28 13:25:43,279:INFO: Loading the datasets...
+2022-07-28 13:25:45,283:INFO: - done.
+2022-07-28 13:25:46,504:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:25:46,505:INFO: Epoch 1/30
+2022-07-28 13:26:23,871:INFO: Loading the datasets...
+2022-07-28 13:26:25,880:INFO: - done.
+2022-07-28 13:26:27,099:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:26:27,100:INFO: Epoch 1/30
+2022-07-28 13:26:40,402:INFO: Loading the datasets...
+2022-07-28 13:26:42,408:INFO: - done.
+2022-07-28 13:26:43,616:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:26:43,617:INFO: Epoch 1/30
+2022-07-28 13:27:12,635:INFO: Loading the datasets...
+2022-07-28 13:27:14,639:INFO: - done.
+2022-07-28 13:27:15,860:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:27:15,861:INFO: Epoch 1/30
+2022-07-28 13:27:34,510:INFO: Loading the datasets...
+2022-07-28 13:27:36,513:INFO: - done.
+2022-07-28 13:27:37,717:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:27:37,717:INFO: Epoch 1/30
+2022-07-28 13:30:03,343:INFO: Loading the datasets...
+2022-07-28 13:30:05,346:INFO: - done.
+2022-07-28 13:30:06,563:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:30:06,563:INFO: Epoch 1/30
+2022-07-28 13:30:34,275:INFO: Loading the datasets...
+2022-07-28 13:30:36,281:INFO: - done.
+2022-07-28 13:30:37,501:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:30:37,502:INFO: Epoch 1/30
+2022-07-28 13:32:14,899:INFO: Loading the datasets...
+2022-07-28 13:32:16,904:INFO: - done.
+2022-07-28 13:32:18,121:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:32:18,122:INFO: Epoch 1/30
+2022-07-28 13:35:06,759:INFO: Loading the datasets...
+2022-07-28 13:35:08,768:INFO: - done.
+2022-07-28 13:35:09,996:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:35:09,996:INFO: Epoch 1/30
+2022-07-28 13:36:43,303:INFO: Loading the datasets...
+2022-07-28 13:36:45,302:INFO: - done.
+2022-07-28 13:36:46,519:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:36:46,519:INFO: Epoch 1/30
+2022-07-28 13:37:17,079:INFO: Loading the datasets...
+2022-07-28 13:37:19,089:INFO: - done.
+2022-07-28 13:37:20,307:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:37:20,307:INFO: Epoch 1/30
+2022-07-28 13:37:38,058:INFO: Loading the datasets...
+2022-07-28 13:37:40,064:INFO: - done.
+2022-07-28 13:37:41,266:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:37:41,266:INFO: Epoch 1/30
+2022-07-28 13:38:50,503:INFO: Loading the datasets...
+2022-07-28 13:38:52,508:INFO: - done.
+2022-07-28 13:38:53,724:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:38:53,725:INFO: Epoch 1/30
+2022-07-28 13:39:20,727:INFO: Loading the datasets...
+2022-07-28 13:39:22,732:INFO: - done.
+2022-07-28 13:39:23,949:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:39:23,950:INFO: Epoch 1/30
+2022-07-28 13:44:02,631:INFO: Loading the datasets...
+2022-07-28 13:44:04,634:INFO: - done.
+2022-07-28 13:44:05,862:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:44:05,862:INFO: Epoch 1/30
+2022-07-28 13:44:25,863:INFO: Loading the datasets...
+2022-07-28 13:44:27,873:INFO: - done.
+2022-07-28 13:44:29,094:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:44:29,094:INFO: Epoch 1/30
+2022-07-28 13:45:04,950:INFO: Loading the datasets...
+2022-07-28 13:45:06,950:INFO: - done.
+2022-07-28 13:45:08,168:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:45:08,168:INFO: Epoch 1/30
+2022-07-28 13:45:10,828:INFO: - Train metrics: accuracy: 0.455 ; loss: 1.477
+2022-07-28 13:45:57,999:INFO: Loading the datasets...
+2022-07-28 13:46:00,005:INFO: - done.
+2022-07-28 13:46:01,218:INFO: Starting training for 30 epoch(s)
+2022-07-28 13:46:01,218:INFO: Epoch 1/30
+2022-07-28 13:46:03,773:INFO: - Train metrics: accuracy: 0.453 ; loss: 1.481
+2022-07-28 13:46:04,321:INFO: - Eval metrics : accuracy: 0.660 ; loss: 0.976
+2022-07-28 13:46:04,333:INFO: - Found new best accuracy
+2022-07-28 13:46:04,333:INFO: Epoch 2/30
+2022-07-28 13:46:06,991:INFO: - Train metrics: accuracy: 0.674 ; loss: 0.958
+2022-07-28 13:46:07,542:INFO: - Eval metrics : accuracy: 0.710 ; loss: 0.816
+2022-07-28 13:46:07,554:INFO: - Found new best accuracy
+2022-07-28 13:46:07,554:INFO: Epoch 3/30
+2022-07-28 13:46:10,098:INFO: - Train metrics: accuracy: 0.729 ; loss: 0.780
+2022-07-28 13:46:10,668:INFO: - Eval metrics : accuracy: 0.751 ; loss: 0.719
+2022-07-28 13:46:10,681:INFO: - Found new best accuracy
+2022-07-28 13:46:10,681:INFO: Epoch 4/30
+2022-07-28 13:46:13,282:INFO: - Train metrics: accuracy: 0.785 ; loss: 0.597
+2022-07-28 13:46:13,833:INFO: - Eval metrics : accuracy: 0.759 ; loss: 0.691
+2022-07-28 13:46:13,845:INFO: - Found new best accuracy
+2022-07-28 13:46:13,846:INFO: Epoch 5/30
+2022-07-28 13:46:16,435:INFO: - Train metrics: accuracy: 0.799 ; loss: 0.600
+2022-07-28 13:46:17,019:INFO: - Eval metrics : accuracy: 0.759 ; loss: 0.694
+2022-07-28 13:46:17,028:INFO: Epoch 6/30
+2022-07-28 13:46:19,680:INFO: - Train metrics: accuracy: 0.803 ; loss: 0.595
+2022-07-28 13:46:20,238:INFO: - Eval metrics : accuracy: 0.770 ; loss: 0.671
+2022-07-28 13:46:20,251:INFO: - Found new best accuracy
+2022-07-28 13:46:20,251:INFO: Epoch 7/30
+2022-07-28 13:46:22,844:INFO: - Train metrics: accuracy: 0.830 ; loss: 0.520
+2022-07-28 13:46:23,381:INFO: - Eval metrics : accuracy: 0.774 ; loss: 0.662
+2022-07-28 13:46:23,413:INFO: - Found new best accuracy
+2022-07-28 13:46:23,413:INFO: Epoch 8/30
+2022-07-28 13:46:26,114:INFO: - Train metrics: accuracy: 0.852 ; loss: 0.403
+2022-07-28 13:46:26,671:INFO: - Eval metrics : accuracy: 0.787 ; loss: 0.656
+2022-07-28 13:46:26,683:INFO: - Found new best accuracy
+2022-07-28 13:46:26,684:INFO: Epoch 9/30
+2022-07-28 13:46:29,289:INFO: - Train metrics: accuracy: 0.846 ; loss: 0.445
+2022-07-28 13:46:29,859:INFO: - Eval metrics : accuracy: 0.781 ; loss: 0.673
+2022-07-28 13:46:29,869:INFO: Epoch 10/30
+2022-07-28 13:46:32,566:INFO: - Train metrics: accuracy: 0.873 ; loss: 0.332
+2022-07-28 13:46:33,154:INFO: - Eval metrics : accuracy: 0.776 ; loss: 0.704
+2022-07-28 13:46:33,164:INFO: Epoch 11/30
+2022-07-28 13:46:35,838:INFO: - Train metrics: accuracy: 0.889 ; loss: 0.308
+2022-07-28 13:46:36,379:INFO: - Eval metrics : accuracy: 0.777 ; loss: 0.725
+2022-07-28 13:46:36,389:INFO: Epoch 12/30
+2022-07-28 13:46:38,921:INFO: - Train metrics: accuracy: 0.877 ; loss: 0.341
+2022-07-28 13:46:39,455:INFO: - Eval metrics : accuracy: 0.784 ; loss: 0.712
+2022-07-28 13:46:39,465:INFO: Epoch 13/30
+2022-07-28 13:46:42,063:INFO: - Train metrics: accuracy: 0.885 ; loss: 0.340
+2022-07-28 13:46:42,686:INFO: - Eval metrics : accuracy: 0.781 ; loss: 0.743
+2022-07-28 13:46:42,696:INFO: Epoch 14/30
+2022-07-28 13:46:45,293:INFO: - Train metrics: accuracy: 0.898 ; loss: 0.261
+2022-07-28 13:46:45,836:INFO: - Eval metrics : accuracy: 0.777 ; loss: 0.779
+2022-07-28 13:46:45,846:INFO: Epoch 15/30
+2022-07-28 13:46:48,490:INFO: - Train metrics: accuracy: 0.939 ; loss: 0.184
+2022-07-28 13:46:49,025:INFO: - Eval metrics : accuracy: 0.778 ; loss: 0.793
+2022-07-28 13:46:49,035:INFO: Epoch 16/30
+2022-07-28 13:46:51,646:INFO: - Train metrics: accuracy: 0.920 ; loss: 0.224
+2022-07-28 13:46:52,219:INFO: - Eval metrics : accuracy: 0.784 ; loss: 0.774
+2022-07-28 13:46:52,229:INFO: Epoch 17/30
+2022-07-28 13:46:54,836:INFO: - Train metrics: accuracy: 0.943 ; loss: 0.192
+2022-07-28 13:46:55,429:INFO: - Eval metrics : accuracy: 0.779 ; loss: 0.823
+2022-07-28 13:46:55,439:INFO: Epoch 18/30
+2022-07-28 13:46:58,086:INFO: - Train metrics: accuracy: 0.947 ; loss: 0.163
+2022-07-28 13:46:58,671:INFO: - Eval metrics : accuracy: 0.780 ; loss: 0.823
+2022-07-28 13:46:58,681:INFO: Epoch 19/30
+2022-07-28 13:47:01,327:INFO: - Train metrics: accuracy: 0.945 ; loss: 0.171
+2022-07-28 13:47:01,883:INFO: - Eval metrics : accuracy: 0.783 ; loss: 0.839
+2022-07-28 13:47:01,893:INFO: Epoch 20/30
+2022-07-28 13:47:04,468:INFO: - Train metrics: accuracy: 0.947 ; loss: 0.159
+2022-07-28 13:47:05,041:INFO: - Eval metrics : accuracy: 0.767 ; loss: 0.984
+2022-07-28 13:47:05,050:INFO: Epoch 21/30
+2022-07-28 13:47:07,574:INFO: - Train metrics: accuracy: 0.961 ; loss: 0.114
+2022-07-28 13:47:08,197:INFO: - Eval metrics : accuracy: 0.777 ; loss: 0.907
+2022-07-28 13:47:08,207:INFO: Epoch 22/30
+2022-07-28 13:47:10,862:INFO: - Train metrics: accuracy: 0.955 ; loss: 0.146
+2022-07-28 13:47:11,410:INFO: - Eval metrics : accuracy: 0.777 ; loss: 0.956
+2022-07-28 13:47:11,419:INFO: Epoch 23/30
+2022-07-28 13:47:14,023:INFO: - Train metrics: accuracy: 0.938 ; loss: 0.153
+2022-07-28 13:47:14,573:INFO: - Eval metrics : accuracy: 0.778 ; loss: 0.941
+2022-07-28 13:47:14,582:INFO: Epoch 24/30
+2022-07-28 13:47:17,197:INFO: - Train metrics: accuracy: 0.951 ; loss: 0.142
+2022-07-28 13:47:17,754:INFO: - Eval metrics : accuracy: 0.781 ; loss: 0.936
+2022-07-28 13:47:17,763:INFO: Epoch 25/30
+2022-07-28 13:47:20,308:INFO: - Train metrics: accuracy: 0.951 ; loss: 0.125
+2022-07-28 13:47:20,837:INFO: - Eval metrics : accuracy: 0.781 ; loss: 0.963
+2022-07-28 13:47:20,847:INFO: Epoch 26/30
+2022-07-28 13:47:23,488:INFO: - Train metrics: accuracy: 0.959 ; loss: 0.110
+2022-07-28 13:47:24,060:INFO: - Eval metrics : accuracy: 0.775 ; loss: 0.985
+2022-07-28 13:47:24,070:INFO: Epoch 27/30
+2022-07-28 13:47:26,715:INFO: - Train metrics: accuracy: 0.951 ; loss: 0.130
+2022-07-28 13:47:27,272:INFO: - Eval metrics : accuracy: 0.774 ; loss: 1.034
+2022-07-28 13:47:27,281:INFO: Epoch 28/30
+2022-07-28 13:47:29,854:INFO: - Train metrics: accuracy: 0.955 ; loss: 0.120
+2022-07-28 13:47:30,449:INFO: - Eval metrics : accuracy: 0.773 ; loss: 1.042
+2022-07-28 13:47:30,459:INFO: Epoch 29/30
+2022-07-28 13:47:33,091:INFO: - Train metrics: accuracy: 0.947 ; loss: 0.136
+2022-07-28 13:47:33,711:INFO: - Eval metrics : accuracy: 0.773 ; loss: 1.017
+2022-07-28 13:47:33,721:INFO: Epoch 30/30
+2022-07-28 13:47:36,312:INFO: - Train metrics: accuracy: 0.947 ; loss: 0.121
+2022-07-28 13:47:36,847:INFO: - Eval metrics : accuracy: 0.772 ; loss: 1.041

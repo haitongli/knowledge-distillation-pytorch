@@ -58,8 +58,7 @@ def train(model, optimizer, loss_fn, dataloader, metrics, params):
         for i, (train_batch, labels_batch) in enumerate(dataloader):
             # move to GPU if available
             if params.cuda:
-                train_batch, labels_batch = train_batch.cuda(async=True), \
-                                            labels_batch.cuda(async=True)
+                train_batch, labels_batch = train_batch.cuda(non_blocking=True), labels_batch.cuda(non_blocking=True)
             # convert to torch Variables
             train_batch, labels_batch = Variable(train_batch), Variable(labels_batch)
 
@@ -83,15 +82,15 @@ def train(model, optimizer, loss_fn, dataloader, metrics, params):
                 # compute all metrics on this batch
                 summary_batch = {metric:metrics[metric](output_batch, labels_batch)
                                  for metric in metrics}
-                summary_batch['loss'] = loss.data[0]
+                summary_batch['loss'] = loss.cpu().detach().numpy()
                 summ.append(summary_batch)
 
             # update the average loss
-            loss_avg.update(loss.data[0])
+            loss_avg.update(loss)
 
             t.set_postfix(loss='{:05.3f}'.format(loss_avg()))
             t.update()
-
+    print(summ[0])
     # compute mean of all metrics in summary
     metrics_mean = {metric:np.mean([x[metric] for x in summ]) for metric in summ[0]}
     metrics_string = " ; ".join("{}: {:05.3f}".format(k, v) for k, v in metrics_mean.items())
@@ -186,8 +185,7 @@ def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, p
         for i, (train_batch, labels_batch) in enumerate(dataloader):
             # move to GPU if available
             if params.cuda:
-                train_batch, labels_batch = train_batch.cuda(async=True), \
-                                            labels_batch.cuda(async=True)
+                train_batch, labels_batch = train_batch.cuda(non_blocking=True), labels_batch.cuda(non_blocking=True)
             # convert to torch Variables
             train_batch, labels_batch = Variable(train_batch), Variable(labels_batch)
 
@@ -199,7 +197,7 @@ def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, p
             with torch.no_grad():
                 output_teacher_batch = teacher_model(train_batch)
             if params.cuda:
-                output_teacher_batch = output_teacher_batch.cuda(async=True)
+                output_teacher_batch = output_teacher_batch.cuda(non_blocking=True)
 
             loss = loss_fn_kd(output_batch, labels_batch, output_teacher_batch, params)
 
@@ -320,13 +318,12 @@ if __name__ == '__main__':
 
     # Load the parameters from json file
     args = parser.parse_args()
-    json_path = os.path.join(args.model_dir, 'params.json')
-    assert os.path.isfile(json_path), "No json configuration file found at {}".format(json_path)
-    params = utils.Params(json_path)
+    json_path = os.path.join(args.model_dir, 'params.json')                                      # 인자로 받은 model dir 내 params.json 파일의 경로 읽어오기
+    assert os.path.isfile(json_path), "No json configuration file found at {}".format(json_path) # json 파일이 없는 경우 error 반환
+    params = utils.Params(json_path)                                                             # utils 파일 내 Params클래스의 객체 생성
 
     # use GPU if available
-    params.cuda = torch.cuda.is_available()
-
+    params.cuda = torch.cuda.is_available()                                                      # GPU가 있는 경우 params.cuda 의 값을 True
     # Set the random seed for reproducible experiments
     random.seed(230)
     torch.manual_seed(230)
