@@ -96,6 +96,12 @@ def loss_fn(outputs, labels):
     """
     return nn.CrossEntropyLoss()(outputs, labels)
 
+def BCEloss_fn(outputs, labels):
+    """
+    Compute the Binary Cross Entropy Loss with sigmoid activation function
+    """
+    return nn.BCEWithLogitsLoss()(outputs, labels)
+
 
 def loss_fn_kd(outputs, labels, teacher_outputs, params):
     """
@@ -113,6 +119,12 @@ def loss_fn_kd(outputs, labels, teacher_outputs, params):
 
     return KD_loss
 
+def loss_fn_kd_sigmoid(outputs, labels, teacher_outputs, params):
+    alpha = params.alpha
+    T = params.temperature
+    KD_loss = alpha * nn.BCEWithLogitsLoss()(outputs/T, F.sigmoid(teacher_outputs/T)) + nn.BCEWithLogitsLoss()(outputs, labels) * (1-alpha)
+    return KD_loss
+
 
 def accuracy(outputs, labels):
     """
@@ -124,7 +136,13 @@ def accuracy(outputs, labels):
 
     Returns: (float) accuracy in [0,1]
     """
-    outputs = np.argmax(outputs, axis=1)
+
+    for number in range(0, len(outputs)):
+        for n in range(0, 6):
+            if outputs[number][n] >= 0.5:
+                outputs[number][n] = 1.0
+            else:
+                outputs[number][n] = 0
     return np.sum(outputs==labels)/float(labels.size)
 
 

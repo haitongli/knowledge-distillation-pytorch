@@ -236,3 +236,337 @@
 2018-03-10 07:22:46,567:INFO: Epoch 30/30
 2018-03-10 07:23:44,333:INFO: - Train metrics: accuracy: 0.830 ; loss: 0.445
 2018-03-10 07:23:45,156:INFO: - Eval metrics : accuracy: 0.838 ; loss: 0.000
+2022-07-28 16:42:15,291:INFO: Loading the datasets...
+2022-07-28 16:42:17,302:INFO: - done.
+2022-07-28 16:55:08,875:INFO: Loading the datasets...
+2022-07-28 16:55:10,882:INFO: - done.
+2022-07-28 16:55:12,220:INFO: Experiment - model version: cnn_distill
+2022-07-28 16:55:12,220:INFO: Starting training for 30 epoch(s)
+2022-07-28 16:55:12,221:INFO: First, loading the teacher model and computing its outputs...
+2022-07-28 16:55:12,221:INFO: Epoch 1/30
+2022-07-28 16:55:55,523:INFO: Loading the datasets...
+2022-07-28 16:55:57,522:INFO: - done.
+2022-07-28 16:55:58,862:INFO: Experiment - model version: cnn_distill
+2022-07-28 16:55:58,862:INFO: Starting training for 30 epoch(s)
+2022-07-28 16:55:58,862:INFO: First, loading the teacher model and computing its outputs...
+2022-07-28 16:55:58,862:INFO: Epoch 1/30
+2022-07-28 16:57:51,467:INFO: Loading the datasets...
+2022-07-28 16:57:53,465:INFO: - done.
+2022-07-28 16:57:54,804:INFO: Experiment - model version: cnn_distill
+2022-07-28 16:57:54,804:INFO: Starting training for 30 epoch(s)
+2022-07-28 16:57:54,804:INFO: First, loading the teacher model and computing its outputs...
+2022-07-28 16:57:54,805:INFO: Epoch 1/30
+2022-07-28 16:58:02,782:INFO: - Train metrics: accuracy: 0.150 ; loss: 815.117
+2022-07-28 16:58:03,341:INFO: - Eval metrics : accuracy: 0.241 ; loss: 0.000
+2022-07-28 16:58:03,352:INFO: - Found new best accuracy
+2022-07-28 16:58:03,353:INFO: Epoch 2/30
+2022-07-28 16:58:11,295:INFO: - Train metrics: accuracy: 0.193 ; loss: 764.982
+2022-07-28 16:58:11,907:INFO: - Eval metrics : accuracy: 0.298 ; loss: 0.000
+2022-07-28 16:58:11,919:INFO: - Found new best accuracy
+2022-07-28 16:58:11,919:INFO: Epoch 3/30
+2022-07-28 16:58:19,889:INFO: - Train metrics: accuracy: 0.268 ; loss: 758.214
+2022-07-28 16:58:20,452:INFO: - Eval metrics : accuracy: 0.402 ; loss: 0.000
+2022-07-28 16:58:20,464:INFO: - Found new best accuracy
+2022-07-28 16:58:20,464:INFO: Epoch 4/30
+2022-07-28 16:58:28,436:INFO: - Train metrics: accuracy: 0.311 ; loss: 756.997
+2022-07-28 16:58:29,004:INFO: - Eval metrics : accuracy: 0.485 ; loss: 0.000
+2022-07-28 16:58:29,016:INFO: - Found new best accuracy
+2022-07-28 16:58:29,017:INFO: Epoch 5/30
+2022-07-28 16:58:36,989:INFO: - Train metrics: accuracy: 0.400 ; loss: 756.505
+2022-07-28 16:58:37,528:INFO: - Eval metrics : accuracy: 0.534 ; loss: 0.000
+2022-07-28 16:58:37,540:INFO: - Found new best accuracy
+2022-07-28 16:58:37,540:INFO: Epoch 6/30
+2022-07-28 16:58:45,514:INFO: - Train metrics: accuracy: 0.451 ; loss: 756.180
+2022-07-28 16:58:46,096:INFO: - Eval metrics : accuracy: 0.589 ; loss: 0.000
+2022-07-28 16:58:46,108:INFO: - Found new best accuracy
+2022-07-28 16:58:46,109:INFO: Epoch 7/30
+2022-07-28 16:58:54,093:INFO: - Train metrics: accuracy: 0.537 ; loss: 756.004
+2022-07-28 16:58:54,653:INFO: - Eval metrics : accuracy: 0.634 ; loss: 0.000
+2022-07-28 16:58:54,665:INFO: - Found new best accuracy
+2022-07-28 16:58:54,665:INFO: Epoch 8/30
+2022-07-28 16:59:02,644:INFO: - Train metrics: accuracy: 0.555 ; loss: 755.890
+2022-07-28 16:59:03,200:INFO: - Eval metrics : accuracy: 0.661 ; loss: 0.000
+2022-07-28 16:59:03,212:INFO: - Found new best accuracy
+2022-07-28 16:59:03,213:INFO: Epoch 9/30
+2022-07-28 16:59:11,263:INFO: - Train metrics: accuracy: 0.637 ; loss: 755.761
+2022-07-28 16:59:11,829:INFO: - Eval metrics : accuracy: 0.655 ; loss: 0.000
+2022-07-28 16:59:11,839:INFO: Epoch 10/30
+2022-07-28 16:59:20,017:INFO: - Train metrics: accuracy: 0.641 ; loss: 755.740
+2022-07-28 16:59:20,577:INFO: - Eval metrics : accuracy: 0.713 ; loss: 0.000
+2022-07-28 16:59:20,589:INFO: - Found new best accuracy
+2022-07-28 16:59:20,589:INFO: Epoch 11/30
+2022-07-28 16:59:28,835:INFO: - Train metrics: accuracy: 0.664 ; loss: 755.649
+2022-07-28 16:59:29,404:INFO: - Eval metrics : accuracy: 0.723 ; loss: 0.000
+2022-07-28 16:59:29,416:INFO: - Found new best accuracy
+2022-07-28 16:59:29,416:INFO: Epoch 12/30
+2022-07-28 16:59:37,690:INFO: - Train metrics: accuracy: 0.672 ; loss: 755.621
+2022-07-28 16:59:38,255:INFO: - Eval metrics : accuracy: 0.731 ; loss: 0.000
+2022-07-28 16:59:38,268:INFO: - Found new best accuracy
+2022-07-28 16:59:38,269:INFO: Epoch 13/30
+2022-07-28 16:59:46,452:INFO: - Train metrics: accuracy: 0.711 ; loss: 755.579
+2022-07-28 16:59:47,005:INFO: - Eval metrics : accuracy: 0.733 ; loss: 0.000
+2022-07-28 16:59:47,017:INFO: - Found new best accuracy
+2022-07-28 16:59:47,018:INFO: Epoch 14/30
+2022-07-28 16:59:55,269:INFO: - Train metrics: accuracy: 0.713 ; loss: 755.539
+2022-07-28 16:59:55,876:INFO: - Eval metrics : accuracy: 0.758 ; loss: 0.000
+2022-07-28 16:59:55,888:INFO: - Found new best accuracy
+2022-07-28 16:59:55,888:INFO: Epoch 15/30
+2022-07-28 17:00:04,254:INFO: - Train metrics: accuracy: 0.730 ; loss: 755.522
+2022-07-28 17:00:04,824:INFO: - Eval metrics : accuracy: 0.750 ; loss: 0.000
+2022-07-28 17:00:04,834:INFO: Epoch 16/30
+2022-07-28 17:00:13,072:INFO: - Train metrics: accuracy: 0.779 ; loss: 755.454
+2022-07-28 17:00:13,637:INFO: - Eval metrics : accuracy: 0.748 ; loss: 0.000
+2022-07-28 17:00:13,647:INFO: Epoch 17/30
+2022-07-28 17:00:22,028:INFO: - Train metrics: accuracy: 0.736 ; loss: 755.500
+2022-07-28 17:00:22,559:INFO: - Eval metrics : accuracy: 0.763 ; loss: 0.000
+2022-07-28 17:00:22,571:INFO: - Found new best accuracy
+2022-07-28 17:00:22,572:INFO: Epoch 18/30
+2022-07-28 17:00:31,208:INFO: - Train metrics: accuracy: 0.734 ; loss: 755.502
+2022-07-28 17:00:31,794:INFO: - Eval metrics : accuracy: 0.780 ; loss: 0.000
+2022-07-28 17:00:31,806:INFO: - Found new best accuracy
+2022-07-28 17:00:31,806:INFO: Epoch 19/30
+2022-07-28 17:00:40,256:INFO: - Train metrics: accuracy: 0.748 ; loss: 755.512
+2022-07-28 17:00:40,804:INFO: - Eval metrics : accuracy: 0.780 ; loss: 0.000
+2022-07-28 17:00:40,814:INFO: Epoch 20/30
+2022-07-28 17:00:49,374:INFO: - Train metrics: accuracy: 0.756 ; loss: 755.405
+2022-07-28 17:00:49,926:INFO: - Eval metrics : accuracy: 0.787 ; loss: 0.000
+2022-07-28 17:00:49,939:INFO: - Found new best accuracy
+2022-07-28 17:00:49,939:INFO: Epoch 21/30
+2022-07-28 17:00:58,556:INFO: - Train metrics: accuracy: 0.758 ; loss: 755.480
+2022-07-28 17:00:59,168:INFO: - Eval metrics : accuracy: 0.792 ; loss: 0.000
+2022-07-28 17:00:59,180:INFO: - Found new best accuracy
+2022-07-28 17:00:59,180:INFO: Epoch 22/30
+2022-07-28 17:01:07,688:INFO: - Train metrics: accuracy: 0.795 ; loss: 755.360
+2022-07-28 17:01:08,278:INFO: - Eval metrics : accuracy: 0.795 ; loss: 0.000
+2022-07-28 17:01:08,291:INFO: - Found new best accuracy
+2022-07-28 17:01:08,291:INFO: Epoch 23/30
+2022-07-28 17:01:16,747:INFO: - Train metrics: accuracy: 0.801 ; loss: 755.393
+2022-07-28 17:01:17,367:INFO: - Eval metrics : accuracy: 0.801 ; loss: 0.000
+2022-07-28 17:01:17,379:INFO: - Found new best accuracy
+2022-07-28 17:01:17,379:INFO: Epoch 24/30
+2022-07-28 17:01:26,006:INFO: - Train metrics: accuracy: 0.770 ; loss: 755.374
+2022-07-28 17:01:26,531:INFO: - Eval metrics : accuracy: 0.803 ; loss: 0.000
+2022-07-28 17:01:26,543:INFO: - Found new best accuracy
+2022-07-28 17:01:26,543:INFO: Epoch 25/30
+2022-07-28 17:01:35,145:INFO: - Train metrics: accuracy: 0.816 ; loss: 755.350
+2022-07-28 17:01:35,760:INFO: - Eval metrics : accuracy: 0.802 ; loss: 0.000
+2022-07-28 17:01:35,769:INFO: Epoch 26/30
+2022-07-28 17:01:44,195:INFO: - Train metrics: accuracy: 0.795 ; loss: 755.387
+2022-07-28 17:01:44,736:INFO: - Eval metrics : accuracy: 0.801 ; loss: 0.000
+2022-07-28 17:01:44,746:INFO: Epoch 27/30
+2022-07-28 17:01:53,238:INFO: - Train metrics: accuracy: 0.785 ; loss: 755.387
+2022-07-28 17:01:53,780:INFO: - Eval metrics : accuracy: 0.802 ; loss: 0.000
+2022-07-28 17:01:53,789:INFO: Epoch 28/30
+2022-07-28 17:02:02,406:INFO: - Train metrics: accuracy: 0.820 ; loss: 755.333
+2022-07-28 17:02:02,975:INFO: - Eval metrics : accuracy: 0.815 ; loss: 0.000
+2022-07-28 17:02:02,987:INFO: - Found new best accuracy
+2022-07-28 17:02:02,987:INFO: Epoch 29/30
+2022-07-28 17:02:11,625:INFO: - Train metrics: accuracy: 0.799 ; loss: 755.404
+2022-07-28 17:02:12,259:INFO: - Eval metrics : accuracy: 0.802 ; loss: 0.000
+2022-07-28 17:02:12,270:INFO: Epoch 30/30
+2022-07-28 17:02:20,848:INFO: - Train metrics: accuracy: 0.801 ; loss: 755.378
+2022-07-28 17:02:21,416:INFO: - Eval metrics : accuracy: 0.816 ; loss: 0.000
+2022-07-28 17:02:21,429:INFO: - Found new best accuracy
+2022-07-28 17:02:56,407:INFO: Loading the datasets...
+2022-07-28 17:02:58,409:INFO: - done.
+2022-07-28 17:02:59,742:INFO: Experiment - model version: cnn_distill
+2022-07-28 17:02:59,742:INFO: Starting training for 30 epoch(s)
+2022-07-28 17:02:59,742:INFO: First, loading the teacher model and computing its outputs...
+2022-07-28 17:02:59,743:INFO: Epoch 1/30
+2022-07-28 17:03:07,802:INFO: - Train metrics: accuracy: 0.158 ; loss: 815.093
+2022-07-28 17:03:08,360:INFO: - Eval metrics : accuracy: 0.247 ; loss: 0.000
+2022-07-28 17:03:08,372:INFO: - Found new best accuracy
+2022-07-28 17:03:08,372:INFO: Epoch 2/30
+2022-07-28 17:10:45,759:INFO: Loading the datasets...
+2022-07-28 17:10:47,762:INFO: - done.
+2022-07-28 17:10:49,097:INFO: Experiment - model version: cnn_distill
+2022-07-28 17:10:49,097:INFO: Starting training for 30 epoch(s)
+2022-07-28 17:10:49,097:INFO: First, loading the teacher model and computing its outputs...
+2022-07-28 17:10:49,097:INFO: Epoch 1/30
+2022-07-28 17:10:56,994:INFO: - Train metrics: accuracy: 0.148 ; loss: -245.298
+2022-07-28 17:10:57,553:INFO: - Eval metrics : accuracy: 0.170 ; loss: 0.000
+2022-07-28 17:10:57,566:INFO: - Found new best accuracy
+2022-07-28 17:10:57,566:INFO: Epoch 2/30
+2022-07-28 17:11:05,435:INFO: - Train metrics: accuracy: 0.137 ; loss: -295.235
+2022-07-28 17:11:05,977:INFO: - Eval metrics : accuracy: 0.243 ; loss: 0.000
+2022-07-28 17:11:05,989:INFO: - Found new best accuracy
+2022-07-28 17:11:05,990:INFO: Epoch 3/30
+2022-07-28 17:13:30,591:INFO: Loading the datasets...
+2022-07-28 17:13:32,591:INFO: - done.
+2022-07-28 17:13:33,929:INFO: Experiment - model version: cnn_distill
+2022-07-28 17:13:33,929:INFO: Starting training for 30 epoch(s)
+2022-07-28 17:13:33,929:INFO: First, loading the teacher model and computing its outputs...
+2022-07-28 17:13:33,930:INFO: Epoch 1/30
+2022-07-28 17:23:17,535:INFO: Loading the datasets...
+2022-07-28 17:23:19,535:INFO: - done.
+2022-07-28 17:23:20,873:INFO: Experiment - model version: cnn_distill
+2022-07-28 17:23:20,874:INFO: Starting training for 30 epoch(s)
+2022-07-28 17:23:20,874:INFO: First, loading the teacher model and computing its outputs...
+2022-07-28 17:23:20,874:INFO: Epoch 1/30
+2022-07-28 17:23:28,909:INFO: - Train metrics: accuracy: 0.400 ; loss: -0.434
+2022-07-28 17:23:29,450:INFO: - Eval metrics : accuracy: 0.626 ; loss: 0.000
+2022-07-28 17:23:29,462:INFO: - Found new best accuracy
+2022-07-28 17:23:29,463:INFO: Epoch 2/30
+2022-07-28 17:26:08,860:INFO: Loading the datasets...
+2022-07-28 17:26:10,870:INFO: - done.
+2022-07-28 17:26:12,209:INFO: Experiment - model version: cnn_distill
+2022-07-28 17:26:12,209:INFO: Starting training for 30 epoch(s)
+2022-07-28 17:26:12,209:INFO: First, loading the teacher model and computing its outputs...
+2022-07-28 17:26:12,209:INFO: Epoch 1/30
+2022-07-28 17:26:31,319:INFO: Loading the datasets...
+2022-07-28 17:26:33,320:INFO: - done.
+2022-07-28 17:26:34,662:INFO: Experiment - model version: cnn_distill
+2022-07-28 17:26:34,662:INFO: Starting training for 30 epoch(s)
+2022-07-28 17:26:34,662:INFO: First, loading the teacher model and computing its outputs...
+2022-07-28 17:26:34,662:INFO: Epoch 1/30
+2022-07-28 17:26:42,781:INFO: - Train metrics: accuracy: 0.400 ; loss: 0.144
+2022-07-28 17:26:43,340:INFO: - Eval metrics : accuracy: 0.629 ; loss: 0.000
+2022-07-28 17:26:43,352:INFO: - Found new best accuracy
+2022-07-28 17:26:43,352:INFO: Epoch 2/30
+2022-07-28 17:27:15,267:INFO: Loading the datasets...
+2022-07-28 17:27:17,269:INFO: - done.
+2022-07-28 17:27:18,609:INFO: Experiment - model version: cnn_distill
+2022-07-28 17:27:18,609:INFO: Starting training for 30 epoch(s)
+2022-07-28 17:27:18,609:INFO: First, loading the teacher model and computing its outputs...
+2022-07-28 17:27:18,609:INFO: Epoch 1/30
+2022-07-28 17:27:26,515:INFO: - Train metrics: accuracy: 0.396 ; loss: 0.144
+2022-07-28 17:27:27,048:INFO: - Eval metrics : accuracy: 0.616 ; loss: 0.000
+2022-07-28 17:27:27,060:INFO: - Found new best accuracy
+2022-07-28 17:27:27,060:INFO: Epoch 2/30
+2022-07-28 17:27:34,946:INFO: - Train metrics: accuracy: 0.594 ; loss: -0.013
+2022-07-28 17:27:35,524:INFO: - Eval metrics : accuracy: 0.667 ; loss: 0.000
+2022-07-28 17:27:35,536:INFO: - Found new best accuracy
+2022-07-28 17:27:35,536:INFO: Epoch 3/30
+2022-07-28 17:27:43,442:INFO: - Train metrics: accuracy: 0.637 ; loss: -0.141
+2022-07-28 17:27:44,015:INFO: - Eval metrics : accuracy: 0.707 ; loss: 0.000
+2022-07-28 17:27:44,028:INFO: - Found new best accuracy
+2022-07-28 17:27:44,028:INFO: Epoch 4/30
+2022-07-28 17:27:51,935:INFO: - Train metrics: accuracy: 0.682 ; loss: -0.199
+2022-07-28 17:27:52,499:INFO: - Eval metrics : accuracy: 0.737 ; loss: 0.000
+2022-07-28 17:27:52,511:INFO: - Found new best accuracy
+2022-07-28 17:27:52,511:INFO: Epoch 5/30
+2022-07-28 17:28:00,447:INFO: - Train metrics: accuracy: 0.678 ; loss: -0.223
+2022-07-28 17:28:01,075:INFO: - Eval metrics : accuracy: 0.726 ; loss: 0.000
+2022-07-28 17:28:01,085:INFO: Epoch 6/30
+2022-07-28 17:28:09,020:INFO: - Train metrics: accuracy: 0.678 ; loss: -0.232
+2022-07-28 17:28:09,586:INFO: - Eval metrics : accuracy: 0.759 ; loss: 0.000
+2022-07-28 17:28:09,598:INFO: - Found new best accuracy
+2022-07-28 17:28:09,598:INFO: Epoch 7/30
+2022-07-28 17:28:36,299:INFO: Loading the datasets...
+2022-07-28 17:28:38,307:INFO: - done.
+2022-07-28 17:28:39,654:INFO: Experiment - model version: cnn_distill
+2022-07-28 17:28:39,654:INFO: Starting training for 30 epoch(s)
+2022-07-28 17:28:39,654:INFO: First, loading the teacher model and computing its outputs...
+2022-07-28 17:28:39,654:INFO: Epoch 1/30
+2022-07-28 17:29:24,419:INFO: Loading the datasets...
+2022-07-28 17:29:26,423:INFO: - done.
+2022-07-28 17:29:27,760:INFO: Experiment - model version: cnn_distill
+2022-07-28 17:29:27,760:INFO: Starting training for 30 epoch(s)
+2022-07-28 17:29:27,761:INFO: First, loading the teacher model and computing its outputs...
+2022-07-28 17:29:27,761:INFO: Epoch 1/30
+2022-07-28 17:29:35,703:INFO: - Train metrics: accuracy: 0.398 ; loss: 1.669
+2022-07-28 17:29:36,307:INFO: - Eval metrics : accuracy: 0.614 ; loss: 0.000
+2022-07-28 17:29:36,319:INFO: - Found new best accuracy
+2022-07-28 17:29:36,319:INFO: Epoch 2/30
+2022-07-28 17:29:44,253:INFO: - Train metrics: accuracy: 0.590 ; loss: 1.131
+2022-07-28 17:29:44,863:INFO: - Eval metrics : accuracy: 0.675 ; loss: 0.000
+2022-07-28 17:29:44,875:INFO: - Found new best accuracy
+2022-07-28 17:29:44,875:INFO: Epoch 3/30
+2022-07-28 17:29:52,805:INFO: - Train metrics: accuracy: 0.646 ; loss: 0.961
+2022-07-28 17:29:53,326:INFO: - Eval metrics : accuracy: 0.688 ; loss: 0.000
+2022-07-28 17:29:53,338:INFO: - Found new best accuracy
+2022-07-28 17:29:53,338:INFO: Epoch 4/30
+2022-07-28 17:30:01,285:INFO: - Train metrics: accuracy: 0.668 ; loss: 0.931
+2022-07-28 17:30:01,868:INFO: - Eval metrics : accuracy: 0.732 ; loss: 0.000
+2022-07-28 17:30:01,880:INFO: - Found new best accuracy
+2022-07-28 17:30:01,881:INFO: Epoch 5/30
+2022-07-28 17:30:09,861:INFO: - Train metrics: accuracy: 0.697 ; loss: 0.879
+2022-07-28 17:30:10,411:INFO: - Eval metrics : accuracy: 0.720 ; loss: 0.000
+2022-07-28 17:30:10,421:INFO: Epoch 6/30
+2022-07-28 17:30:18,414:INFO: - Train metrics: accuracy: 0.686 ; loss: 0.846
+2022-07-28 17:30:18,996:INFO: - Eval metrics : accuracy: 0.752 ; loss: 0.000
+2022-07-28 17:30:19,008:INFO: - Found new best accuracy
+2022-07-28 17:30:19,008:INFO: Epoch 7/30
+2022-07-28 17:30:27,016:INFO: - Train metrics: accuracy: 0.707 ; loss: 0.750
+2022-07-28 17:30:27,592:INFO: - Eval metrics : accuracy: 0.772 ; loss: 0.000
+2022-07-28 17:30:27,604:INFO: - Found new best accuracy
+2022-07-28 17:30:27,604:INFO: Epoch 8/30
+2022-07-28 17:30:35,617:INFO: - Train metrics: accuracy: 0.734 ; loss: 0.710
+2022-07-28 17:30:36,235:INFO: - Eval metrics : accuracy: 0.785 ; loss: 0.000
+2022-07-28 17:30:36,248:INFO: - Found new best accuracy
+2022-07-28 17:30:36,248:INFO: Epoch 9/30
+2022-07-28 17:30:44,238:INFO: - Train metrics: accuracy: 0.758 ; loss: 0.643
+2022-07-28 17:30:44,876:INFO: - Eval metrics : accuracy: 0.783 ; loss: 0.000
+2022-07-28 17:30:44,886:INFO: Epoch 10/30
+2022-07-28 17:30:52,897:INFO: - Train metrics: accuracy: 0.766 ; loss: 0.690
+2022-07-28 17:30:53,494:INFO: - Eval metrics : accuracy: 0.785 ; loss: 0.000
+2022-07-28 17:30:53,507:INFO: - Found new best accuracy
+2022-07-28 17:30:53,507:INFO: Epoch 11/30
+2022-07-28 17:31:01,546:INFO: - Train metrics: accuracy: 0.770 ; loss: 0.513
+2022-07-28 17:31:02,116:INFO: - Eval metrics : accuracy: 0.796 ; loss: 0.000
+2022-07-28 17:31:02,128:INFO: - Found new best accuracy
+2022-07-28 17:31:02,128:INFO: Epoch 12/30
+2022-07-28 17:31:10,180:INFO: - Train metrics: accuracy: 0.766 ; loss: 0.519
+2022-07-28 17:31:10,759:INFO: - Eval metrics : accuracy: 0.801 ; loss: 0.000
+2022-07-28 17:31:10,771:INFO: - Found new best accuracy
+2022-07-28 17:31:10,771:INFO: Epoch 13/30
+2022-07-28 17:31:18,996:INFO: - Train metrics: accuracy: 0.777 ; loss: 0.481
+2022-07-28 17:31:19,550:INFO: - Eval metrics : accuracy: 0.794 ; loss: 0.000
+2022-07-28 17:31:19,560:INFO: Epoch 14/30
+2022-07-28 17:31:27,746:INFO: - Train metrics: accuracy: 0.789 ; loss: 0.450
+2022-07-28 17:31:28,268:INFO: - Eval metrics : accuracy: 0.805 ; loss: 0.000
+2022-07-28 17:31:28,280:INFO: - Found new best accuracy
+2022-07-28 17:31:28,280:INFO: Epoch 15/30
+2022-07-28 17:31:36,526:INFO: - Train metrics: accuracy: 0.789 ; loss: 0.450
+2022-07-28 17:31:37,133:INFO: - Eval metrics : accuracy: 0.805 ; loss: 0.000
+2022-07-28 17:31:37,145:INFO: - Found new best accuracy
+2022-07-28 17:31:37,145:INFO: Epoch 16/30
+2022-07-28 17:31:45,313:INFO: - Train metrics: accuracy: 0.814 ; loss: 0.415
+2022-07-28 17:31:45,851:INFO: - Eval metrics : accuracy: 0.803 ; loss: 0.000
+2022-07-28 17:31:45,861:INFO: Epoch 17/30
+2022-07-28 17:31:54,112:INFO: - Train metrics: accuracy: 0.789 ; loss: 0.437
+2022-07-28 17:31:54,671:INFO: - Eval metrics : accuracy: 0.804 ; loss: 0.000
+2022-07-28 17:31:54,681:INFO: Epoch 18/30
+2022-07-28 17:32:02,886:INFO: - Train metrics: accuracy: 0.795 ; loss: 0.407
+2022-07-28 17:32:03,450:INFO: - Eval metrics : accuracy: 0.820 ; loss: 0.000
+2022-07-28 17:32:03,462:INFO: - Found new best accuracy
+2022-07-28 17:32:03,463:INFO: Epoch 19/30
+2022-07-28 17:32:11,678:INFO: - Train metrics: accuracy: 0.785 ; loss: 0.406
+2022-07-28 17:32:12,248:INFO: - Eval metrics : accuracy: 0.816 ; loss: 0.000
+2022-07-28 17:32:12,258:INFO: Epoch 20/30
+2022-07-28 17:32:20,490:INFO: - Train metrics: accuracy: 0.807 ; loss: 0.327
+2022-07-28 17:32:21,023:INFO: - Eval metrics : accuracy: 0.816 ; loss: 0.000
+2022-07-28 17:32:21,033:INFO: Epoch 21/30
+2022-07-28 17:32:29,237:INFO: - Train metrics: accuracy: 0.773 ; loss: 0.385
+2022-07-28 17:32:29,833:INFO: - Eval metrics : accuracy: 0.811 ; loss: 0.000
+2022-07-28 17:32:29,843:INFO: Epoch 22/30
+2022-07-28 17:32:38,457:INFO: - Train metrics: accuracy: 0.830 ; loss: 0.234
+2022-07-28 17:32:39,030:INFO: - Eval metrics : accuracy: 0.824 ; loss: 0.000
+2022-07-28 17:32:39,043:INFO: - Found new best accuracy
+2022-07-28 17:32:39,043:INFO: Epoch 23/30
+2022-07-28 17:32:47,195:INFO: - Train metrics: accuracy: 0.807 ; loss: 0.275
+2022-07-28 17:32:47,756:INFO: - Eval metrics : accuracy: 0.827 ; loss: 0.000
+2022-07-28 17:32:47,769:INFO: - Found new best accuracy
+2022-07-28 17:32:47,769:INFO: Epoch 24/30
+2022-07-28 17:32:56,208:INFO: - Train metrics: accuracy: 0.820 ; loss: 0.258
+2022-07-28 17:32:56,832:INFO: - Eval metrics : accuracy: 0.826 ; loss: 0.000
+2022-07-28 17:32:56,842:INFO: Epoch 25/30
+2022-07-28 17:33:05,091:INFO: - Train metrics: accuracy: 0.838 ; loss: 0.220
+2022-07-28 17:33:05,689:INFO: - Eval metrics : accuracy: 0.820 ; loss: 0.000
+2022-07-28 17:33:05,699:INFO: Epoch 26/30
+2022-07-28 17:33:13,997:INFO: - Train metrics: accuracy: 0.834 ; loss: 0.203
+2022-07-28 17:33:14,599:INFO: - Eval metrics : accuracy: 0.827 ; loss: 0.000
+2022-07-28 17:33:14,612:INFO: - Found new best accuracy
+2022-07-28 17:33:14,612:INFO: Epoch 27/30
+2022-07-28 17:33:22,957:INFO: - Train metrics: accuracy: 0.836 ; loss: 0.203
+2022-07-28 17:33:23,531:INFO: - Eval metrics : accuracy: 0.823 ; loss: 0.000
+2022-07-28 17:33:23,541:INFO: Epoch 28/30
+2022-07-28 17:33:31,973:INFO: - Train metrics: accuracy: 0.846 ; loss: 0.177
+2022-07-28 17:33:32,570:INFO: - Eval metrics : accuracy: 0.834 ; loss: 0.000
+2022-07-28 17:33:32,583:INFO: - Found new best accuracy
+2022-07-28 17:33:32,583:INFO: Epoch 29/30
+2022-07-28 17:33:40,874:INFO: - Train metrics: accuracy: 0.805 ; loss: 0.246
+2022-07-28 17:33:41,508:INFO: - Eval metrics : accuracy: 0.828 ; loss: 0.000
+2022-07-28 17:33:41,518:INFO: Epoch 30/30
+2022-07-28 17:33:49,891:INFO: - Train metrics: accuracy: 0.803 ; loss: 0.240
+2022-07-28 17:33:50,452:INFO: - Eval metrics : accuracy: 0.826 ; loss: 0.000
