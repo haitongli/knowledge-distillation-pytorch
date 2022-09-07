@@ -33,7 +33,7 @@
 
 ## Key notes about usage for your experiments:
 
-* Download the zip file for pretrained teacher model checkpoints from this [Box folder](https://stanford.box.com/s/5lwrieh9g1upju0iz9ru93m9d7uo3sox)
+* Download the zip file for pretrained teacher model checkpoints from ["experiments.zip"](https://drive.google.com/file/d/12slKl4Vc8SbozFlvb-ahoR95F5yCwB_K/view?usp=sharing)
 * Simply move the unzipped subfolders into 'knowledge-distillation-pytorch/experiments/' (replacing the existing ones if necessary; follow the default path naming)
 * Call train.py to start training 5-layer CNN with ResNet-18's dark knowledge, or training ResNet-18 with state-of-the-art deeper models distilled
 * Use search_hyperparams.py for hypersearch
