@@ -11,7 +11,8 @@ import utils
 import model.net as net
 import model.resnet as resnet
 import model.data_loader as data_loader
-
+from model.net import accuracy
+import torch.nn.functional as F
 parser = argparse.ArgumentParser()
 parser.add_argument('--model_dir', default='experiments/base_model', help="Directory of params.json")
 parser.add_argument('--restore_file', default='best', help="name of the file in --model_dir \
@@ -41,7 +42,7 @@ def evaluate(model, loss_fn, dataloader, metrics, params):
 
         # move to GPU if available
         if params.cuda:
-            data_batch, labels_batch = data_batch.cuda(async=True), labels_batch.cuda(async=True)
+            data_batch, labels_batch = data_batch.cuda(non_blocking=True), labels_batch.cuda(non_blocking=True)
         # fetch the next evaluation batch
         data_batch, labels_batch = Variable(data_batch), Variable(labels_batch)
         
@@ -56,7 +57,7 @@ def evaluate(model, loss_fn, dataloader, metrics, params):
         # compute all metrics on this batch
         summary_batch = {metric: metrics[metric](output_batch, labels_batch)
                          for metric in metrics}
-        summary_batch['loss'] = loss.data[0]
+        summary_batch['loss'] = loss.cpu().detach().numpy()
         summ.append(summary_batch)
 
     # compute mean of all metrics in summary
@@ -94,16 +95,16 @@ def evaluate_kd(model, dataloader, metrics, params):
 
         # move to GPU if available
         if params.cuda:
-            data_batch, labels_batch = data_batch.cuda(async=True), labels_batch.cuda(async=True)
+            data_batch, labels_batch = data_batch.cuda(non_blocking=True), labels_batch.cuda(non_blocking=True)
         # fetch the next evaluation batch
         data_batch, labels_batch = Variable(data_batch), Variable(labels_batch)
         
         # compute model output
         output_batch = model(data_batch)
 
-        # loss = loss_fn_kd(output_batch, labels_batch, output_teacher_batch, params)
-        loss = 0.0  #force validation loss to zero to reduce computation time
-
+        loss = net.BCEloss_fn(output_batch, labels_batch)
+        output_batch = F.sigmoid(output_batch)
+        # loss = 0.0  #force validation loss to zero to reduce computation time
         # extract data from torch Variable, move to cpu, convert to numpy arrays
         output_batch = output_batch.data.cpu().numpy()
         labels_batch = labels_batch.data.cpu().numpy()
@@ -112,7 +113,8 @@ def evaluate_kd(model, dataloader, metrics, params):
         summary_batch = {metric: metrics[metric](output_batch, labels_batch)
                          for metric in metrics}
         # summary_batch['loss'] = loss.data[0]
-        summary_batch['loss'] = loss
+        summary_batch['loss'] = loss.cpu().detach().numpy()
+        summary_batch['accuracy'] = accuracy(output_batch, labels_batch)
         summ.append(summary_batch)
 
     # compute mean of all metrics in summary

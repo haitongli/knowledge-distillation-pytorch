@@ -119,3 +119,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+*.jpg
+*.png
+*.txt
+*.llc
+*.mp4
+20220704-1
+20220704-2

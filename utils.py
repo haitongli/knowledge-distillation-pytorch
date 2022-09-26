@@ -154,8 +154,20 @@ def load_checkpoint(checkpoint, model, optimizer=None):
     else:
         # this helps avoid errors when loading single-GPU-trained weights onto CPU-model
         checkpoint = torch.load(checkpoint, map_location=lambda storage, loc: storage)
+    state_dict =checkpoint['state_dict']
+    from collections import OrderedDict
+    new_state_dict = OrderedDict()
 
-    model.load_state_dict(checkpoint['state_dict'])
+    for k, v in state_dict.items():
+        print(k)
+        if 'module' not in k:
+            k = 'module.'+k
+        else:
+            k = k.replace('features.module.', 'module.features.')
+        new_state_dict[k]=v
+
+    model.load_state_dict(new_state_dict)
+    # model.load_state_dict(checkpoint['state_dict'])
 
     if optimizer:
         optimizer.load_state_dict(checkpoint['optim_dict'])

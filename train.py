@@ -11,10 +11,10 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
-from torch.optim.lr_scheduler import StepLR
+from torch.optim.lr_scheduler import StepLR, ReduceLROnPlateau
 from torch.autograd import Variable
 from tqdm import tqdm
-
+import torchvision.models as models
 import utils
 import model.net as net
 import model.data_loader as data_loader
@@ -23,6 +23,7 @@ import model.wrn as wrn
 import model.densenet as densenet
 import model.resnext as resnext
 import model.preresnet as preresnet
+from model.net import accuracy
 from evaluate import evaluate, evaluate_kd
 
 parser = argparse.ArgumentParser()
@@ -58,8 +59,7 @@ def train(model, optimizer, loss_fn, dataloader, metrics, params):
         for i, (train_batch, labels_batch) in enumerate(dataloader):
             # move to GPU if available
             if params.cuda:
-                train_batch, labels_batch = train_batch.cuda(async=True), \
-                                            labels_batch.cuda(async=True)
+                train_batch, labels_batch = train_batch.cuda(non_blocking=True), labels_batch.cuda(non_blocking=True)
             # convert to torch Variables
             train_batch, labels_batch = Variable(train_batch), Variable(labels_batch)
 
@@ -83,15 +83,15 @@ def train(model, optimizer, loss_fn, dataloader, metrics, params):
                 # compute all metrics on this batch
                 summary_batch = {metric:metrics[metric](output_batch, labels_batch)
                                  for metric in metrics}
-                summary_batch['loss'] = loss.data[0]
+                summary_batch['loss'] = loss.cpu().detach().numpy()
                 summ.append(summary_batch)
 
             # update the average loss
-            loss_avg.update(loss.data[0])
+            loss_avg.update(loss.cpu().detach().numpy())
 
             t.set_postfix(loss='{:05.3f}'.format(loss_avg()))
             t.update()
-
+    print(summ[0])
     # compute mean of all metrics in summary
     metrics_mean = {metric:np.mean([x[metric] for x in summ]) for metric in summ[0]}
     metrics_string = " ; ".join("{}: {:05.3f}".format(k, v) for k, v in metrics_mean.items())
@@ -186,30 +186,28 @@ def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, p
         for i, (train_batch, labels_batch) in enumerate(dataloader):
             # move to GPU if available
             if params.cuda:
-                train_batch, labels_batch = train_batch.cuda(async=True), \
-                                            labels_batch.cuda(async=True)
+                train_batch, labels_batch = train_batch.cuda(non_blocking=True), labels_batch.cuda(non_blocking=True)
             # convert to torch Variables
             train_batch, labels_batch = Variable(train_batch), Variable(labels_batch)
-
             # compute model output, fetch teacher output, and compute KD loss
             output_batch = model(train_batch)
-
             # get one batch output from teacher_outputs list
 
             with torch.no_grad():
                 output_teacher_batch = teacher_model(train_batch)
+
             if params.cuda:
-                output_teacher_batch = output_teacher_batch.cuda(async=True)
-
+                output_teacher_batch = output_teacher_batch.cuda(non_blocking=True)
             loss = loss_fn_kd(output_batch, labels_batch, output_teacher_batch, params)
-
             # clear previous gradients, compute gradients of all variables wrt loss
             optimizer.zero_grad()
             loss.backward()
 
             # performs updates using calculated gradients
             optimizer.step()
+            torch.set_printoptions(precision=5, sci_mode=False)
 
+            output_batch = F.sigmoid(output_batch)
             # Evaluate summaries only once in a while
             if i % params.save_summary_steps == 0:
                 # extract data from torch Variable, move to cpu, convert to numpy arrays
@@ -219,11 +217,13 @@ def train_kd(model, teacher_model, optimizer, loss_fn_kd, dataloader, metrics, p
                 # compute all metrics on this batch
                 summary_batch = {metric:metrics[metric](output_batch, labels_batch)
                                  for metric in metrics}
-                summary_batch['loss'] = loss.data[0]
+                summary_batch['loss'] = loss.cpu().detach().numpy()
+                summary_batch['accuracy'] = accuracy(output_batch, labels_batch)
                 summ.append(summary_batch)
+                print(summ)
 
             # update the average loss
-            loss_avg.update(loss.data[0])
+            loss_avg.update(loss.cpu().detach().numpy())
 
             t.set_postfix(loss='{:05.3f}'.format(loss_avg()))
             t.update()
@@ -251,20 +251,21 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
         utils.load_checkpoint(restore_path, model, optimizer)
 
     best_val_acc = 0.0
+    best_val_loss = 100.0
     
     # Tensorboard logger setup
     # board_logger = utils.Board_Logger(os.path.join(model_dir, 'board_logs'))
 
     # learning rate schedulers for different models:
     if params.model_version == "resnet18_distill":
-        scheduler = StepLR(optimizer, step_size=150, gamma=0.1)
+        scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=30, verbose=1)
     # for cnn models, num_epoch is always < 100, so it's intentionally not using scheduler here
     elif params.model_version == "cnn_distill": 
         scheduler = StepLR(optimizer, step_size=100, gamma=0.2) 
 
     for epoch in range(params.num_epochs):
 
-        scheduler.step()
+        
 
         # Run one epoch
         logging.info("Epoch {}/{}".format(epoch + 1, params.num_epochs))
@@ -275,8 +276,11 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
 
         # Evaluate for one epoch on validation set
         val_metrics = evaluate_kd(model, val_dataloader, metrics, params)
-
+        print(val_metrics)
+        scheduler.step(val_metrics['loss'])
         val_acc = val_metrics['accuracy']
+        val_loss = val_metrics['loss']
+        is_best_loss = val_loss<=best_val_loss
         is_best = val_acc>=best_val_acc
 
         # Save weights
@@ -286,10 +290,18 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
                                is_best=is_best,
                                checkpoint=model_dir)
 
-        # If best_eval, best_save_path
-        if is_best:
-            logging.info("- Found new best accuracy")
-            best_val_acc = val_acc
+        # # If best_eval, best_save_path
+        # if is_best:
+        #     logging.info("- Found new best accuracy")
+        #     best_val_acc = val_acc
+
+        #     # Save best val metrics in a json file in the model directory
+        #     best_json_path = os.path.join(model_dir, "metrics_val_best_weights.json")
+        #     utils.save_dict_to_json(val_metrics, best_json_path)
+        
+        if is_best_loss:
+            logging.info("- Found new best loss")
+            best_val_loss = val_loss
 
             # Save best val metrics in a json file in the model directory
             best_json_path = os.path.join(model_dir, "metrics_val_best_weights.json")
@@ -317,16 +329,15 @@ def train_and_evaluate_kd(model, teacher_model, train_dataloader, val_dataloader
 
 
 if __name__ == '__main__':
-
+    NLabels = 6
     # Load the parameters from json file
     args = parser.parse_args()
-    json_path = os.path.join(args.model_dir, 'params.json')
-    assert os.path.isfile(json_path), "No json configuration file found at {}".format(json_path)
-    params = utils.Params(json_path)
+    json_path = os.path.join(args.model_dir, 'params.json')                                      # 인자로 받은 model dir 내 params.json 파일의 경로 읽어오기
+    assert os.path.isfile(json_path), "No json configuration file found at {}".format(json_path) # json 파일이 없는 경우 error 반환
+    params = utils.Params(json_path)                                                             # utils 파일 내 Params클래스의 객체 생성
 
     # use GPU if available
-    params.cuda = torch.cuda.is_available()
-
+    params.cuda = torch.cuda.is_available()                                                      # GPU가 있는 경우 params.cuda 의 값을 True
     # Set the random seed for reproducible experiments
     random.seed(230)
     torch.manual_seed(230)
@@ -339,8 +350,10 @@ if __name__ == '__main__':
     logging.info("Loading the datasets...")
 
     # fetch dataloaders, considering full-set vs. sub-set scenarios
-    if params.subset_percent < 1.0:
+    if params.subset_percent < 1.0 and params.balance != 1:
         train_dl = data_loader.fetch_subset_dataloader('train', params)
+    elif params.balance == 1:
+        train_dl = data_loader.fetch_balance_dataloader('train', params)
     else:
         train_dl = data_loader.fetch_dataloader('train', params)
     
@@ -359,16 +372,20 @@ if __name__ == '__main__':
             model = net.Net(params).cuda() if params.cuda else net.Net(params)
             optimizer = optim.Adam(model.parameters(), lr=params.learning_rate)
             # fetch loss function and metrics definition in model files
-            loss_fn_kd = net.loss_fn_kd
+            # loss_fn_kd = net.loss_fn_kd
+            loss_fn_kd = net.loss_fn_kd_sigmoid
             metrics = net.metrics
         
         elif params.model_version == 'resnet18_distill':
-            model = resnet.ResNet18().cuda() if params.cuda else resnet.ResNet18()
+            model = models.resnet18(pretrained=True).cuda() if params.cuda else models.resnet18(pretrained=True)
+            num_ftrs = model.fc.in_features
+            model.fc = nn.Linear(num_ftrs, NLabels)
             optimizer = optim.SGD(model.parameters(), lr=params.learning_rate,
-                                  momentum=0.9, weight_decay=5e-4)
+                                  momentum=0.9, weight_decay=1e-4)
             # fetch loss function and metrics definition in model files
-            loss_fn_kd = net.loss_fn_kd
+            loss_fn_kd = net.loss_fn_kd_sigmoid
             metrics = resnet.metrics
+            model = model.cuda()
 
         """ 
             Specify the pre-trained teacher models for knowledge distillation
@@ -400,6 +417,13 @@ if __name__ == '__main__':
         elif params.teacher == "preresnet110":
             teacher_model = preresnet.PreResNet(depth=110, num_classes=10)
             teacher_checkpoint = 'experiments/base_preresnet110/best.pth.tar'
+            teacher_model = nn.DataParallel(teacher_model).cuda()
+        
+        elif params.teacher == "resnet50":
+            teacher_model = models.resnet50()
+            num_ftrs = teacher_model.fc.in_features
+            teacher_model.fc = nn.Linear(num_ftrs, NLabels)
+            teacher_checkpoint = 'experiments/base_resnet50/best.pth.tar'
             teacher_model = nn.DataParallel(teacher_model).cuda()
 
         utils.load_checkpoint(teacher_checkpoint, teacher_model)
