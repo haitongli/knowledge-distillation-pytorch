@@ -19,6 +19,14 @@
   git clone https://github.com/peterliht/knowledge-distillation-pytorch.git
   ```
 
+* Install python==3.10.15 and create virtualenv
+  ```
+  sudo apt install python3.10 python3.10-venv python3.10-dev
+  python3.10 -m venv venv
+  source venv/bin/activate
+  ```
+
+
 * Install the dependencies (including Pytorch)
   ```
   pip install -r requirements.txt

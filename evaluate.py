@@ -41,7 +41,7 @@ def evaluate(model, loss_fn, dataloader, metrics, params):
 
         # move to GPU if available
         if params.cuda:
-            data_batch, labels_batch = data_batch.cuda(async=True), labels_batch.cuda(async=True)
+            data_batch, labels_batch = data_batch.cuda(), labels_batch.cuda()
         # fetch the next evaluation batch
         data_batch, labels_batch = Variable(data_batch), Variable(labels_batch)
         
@@ -94,7 +94,7 @@ def evaluate_kd(model, dataloader, metrics, params):
 
         # move to GPU if available
         if params.cuda:
-            data_batch, labels_batch = data_batch.cuda(async=True), labels_batch.cuda(async=True)
+            data_batch, labels_batch = data_batch.cuda(), labels_batch.cuda()
         # fetch the next evaluation batch
         data_batch, labels_batch = Variable(data_batch), Variable(labels_batch)
         
